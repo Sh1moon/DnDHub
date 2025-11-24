@@ -35,6 +35,17 @@ jobs:
       - name: Build
         run: npm run build
 
+      - name: Prepare deployment files
+        run: |
+          mkdir -p _site
+          cp index.html _site/
+          cp -r dist _site/
+          cp -r src/js _site/src/
+          cp -r src/data _site/src/
+          cp -r src/img _site/src/
+          cp -r src/fonts _site/src/
+          cp -r src/icons _site/src/ 2>/dev/null || true
+
       - name: Setup Pages
         uses: actions/configure-pages@v4
         with:
@@ -43,14 +54,7 @@ jobs:
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: |
-            index.html
-            dist/
-            src/js/
-            src/data/
-            src/img/
-            src/fonts/
-            src/icons/
+          path: _site
 
   deploy:
     environment:
