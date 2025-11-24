@@ -356,6 +356,7 @@ class AdminPanel {
                                     <td>
                                         ${entity.фото ? `
                                             <img src="${entity.фото}" alt="${entity.название}" 
+                                                 loading="lazy"
                                                  style="max-width: 50px; max-height: 50px; object-fit: contain; border-radius: 4px;">
                                         ` : '<span>Нет</span>'}
                                     </td>
@@ -539,7 +540,7 @@ class AdminPanel {
                             <input type="file" id="imageFileInput" accept="image/*" style="display: none;">
                             ${entity?.фото || entity?.photo ? `
                                 <div class="image-preview">
-                                    <img src="${entity.фото || entity.photo}" alt="Preview" style="max-width: 200px; max-height: 200px; margin-top: 1rem;">
+                                    <img src="${entity.фото || entity.photo}" alt="Preview" loading="lazy" style="max-width: 200px; max-height: 200px; margin-top: 1rem;">
                                 </div>
                             ` : ''}
                         </div>
@@ -974,6 +975,7 @@ class AdminPanel {
             // Обновляем превью
             preview.innerHTML = `
                 <img src="${base64}" alt="Preview" 
+                     loading="lazy"
                      style="max-width: 200px; max-height: 200px; margin-top: 1rem; border-radius: 8px; 
                             border: 2px solid var(--accent-color, #8B5CF6); 
                             object-fit: contain; 
