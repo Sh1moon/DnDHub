@@ -617,9 +617,20 @@ class App {
             <div class="room-manager">
                 <div class="room-manager__header">
                     <h2>Игровые комнаты</h2>
+                    <div class="room-manager__tabs">
+                        <button class="tab-btn active" data-tab="my-rooms">Мои комнаты</button>
+                        <button class="tab-btn" data-tab="public-rooms">Найти кампанию</button>
+                    </div>
                     <button class="btn-primary" id="createRoomBtn">Создать комнату</button>
                 </div>
                 <div id="roomsList"></div>
+                <div id="publicRoomsList" style="display: none;">
+                    <div class="search-section">
+                        <input type="text" id="publicRoomsSearch" class="search-input" placeholder="Поиск кампаний...">
+                        <button class="btn btn-primary" id="searchPublicRoomsBtn">Поиск</button>
+                    </div>
+                    <div id="publicRoomsResults"></div>
+                </div>
                 <div id="roomInterface" style="display: none;"></div>
             </div>
         `;
