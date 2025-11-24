@@ -112,6 +112,13 @@ class FriendsManager {
         const users = this.db.searchUsers(query, currentUser.id);
         const friends = this.db.getFriends(currentUser.id);
         const friendIds = friends.map(f => f.id);
+        
+        // Получаем все запросы на дружбу
+        const allRequests = this.db.getData('friendRequests') || [];
+        const pendingRequests = allRequests.filter(r => r.status === 'pending');
+        const sentRequestIds = pendingRequests
+            .filter(r => r.fromUserId === currentUser.id)
+            .map(r => r.toUserId);
 
         if (users.length === 0) {
             resultsContainer.innerHTML = '<p class="empty-state">Пользователи не найдены</p>';
@@ -122,6 +129,7 @@ class FriendsManager {
             <div class="search-results-list">
                 ${users.map(user => {
                     const isFriend = friendIds.includes(user.id);
+                    const hasSentRequest = sentRequestIds.includes(user.id);
                     return `
                         <div class="search-result-item">
                             <div class="result-avatar">
@@ -133,9 +141,11 @@ class FriendsManager {
                             </div>
                             ${isFriend ? `
                                 <button class="btn btn-secondary btn-small" disabled>Уже в друзьях</button>
+                            ` : hasSentRequest ? `
+                                <button class="btn btn-secondary btn-small" disabled>Запрос отправлен</button>
                             ` : `
                                 <button class="btn btn-primary btn-small add-friend-btn" data-user-id="${user.id}">
-                                    Добавить
+                                    Отправить запрос
                                 </button>
                             `}
                         </div>
