@@ -889,6 +889,9 @@ class CampaignGame {
             spellsListContainer.innerHTML = this.renderSpellsList(spells);
         };
 
+        // Инициализируем список заклинаний при первой загрузке
+        filterAndRenderSpells();
+
         // Обработчики поиска
         if (searchInput) {
             searchInput.addEventListener('input', filterAndRenderSpells);
