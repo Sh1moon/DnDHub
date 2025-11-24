@@ -6,6 +6,7 @@ class FriendsManager {
 
     init() {
         this.renderFriendsList();
+        this.renderFriendRequests();
         this.setupEventListeners();
     }
 
@@ -31,10 +32,24 @@ class FriendsManager {
             friendsList.addEventListener('click', (e) => {
                 if (e.target.classList.contains('add-friend-btn')) {
                     const userId = parseInt(e.target.dataset.userId);
-                    this.addFriend(userId);
+                    this.sendFriendRequest(userId);
                 } else if (e.target.classList.contains('remove-friend-btn')) {
                     const userId = parseInt(e.target.dataset.userId);
                     this.removeFriend(userId);
+                }
+            });
+        }
+
+        // Делегирование событий для запросов на дружбу
+        const requestsContainer = document.getElementById('friendRequestsList');
+        if (requestsContainer) {
+            requestsContainer.addEventListener('click', (e) => {
+                if (e.target.classList.contains('accept-request-btn')) {
+                    const requestId = parseInt(e.target.dataset.requestId);
+                    this.acceptFriendRequest(requestId);
+                } else if (e.target.classList.contains('decline-request-btn')) {
+                    const requestId = parseInt(e.target.dataset.requestId);
+                    this.declineFriendRequest(requestId);
                 }
             });
         }
@@ -133,25 +148,92 @@ class FriendsManager {
         resultsContainer.querySelectorAll('.add-friend-btn').forEach(btn => {
             btn.addEventListener('click', (e) => {
                 const userId = parseInt(e.target.dataset.userId);
-                this.addFriend(userId);
+                this.sendFriendRequest(userId);
             });
         });
     }
 
-    addFriend(friendId) {
+    sendFriendRequest(friendId) {
         const currentUser = this.auth.currentUser;
         if (!currentUser) return;
 
-        const success = this.db.addFriend(currentUser.id, friendId);
+        const success = this.db.sendFriendRequest(currentUser.id, friendId);
         if (success) {
             if (window.UI) {
-                window.UI.showNotification('Друг добавлен', 'success');
+                window.UI.showNotification('Запрос на дружбу отправлен', 'success');
             }
-            this.renderFriendsList();
             this.searchUsers(); // Обновляем результаты поиска
         } else {
             if (window.UI) {
-                window.UI.showNotification('Не удалось добавить друга', 'error');
+                window.UI.showNotification('Не удалось отправить запрос на дружбу', 'error');
+            }
+        }
+    }
+
+    renderFriendRequests() {
+        const container = document.getElementById('friendRequestsList');
+        if (!container) return;
+
+        const currentUser = this.auth.currentUser;
+        if (!currentUser) return;
+
+        const requests = this.db.getFriendRequests(currentUser.id);
+
+        if (requests.length === 0) {
+            container.innerHTML = '<p class="empty-state">У вас нет входящих запросов на дружбу</p>';
+            return;
+        }
+
+        container.innerHTML = `
+            <div class="friend-requests-list">
+                ${requests.map(request => `
+                    <div class="friend-request-item" data-request-id="${request.id}">
+                        <div class="result-avatar">
+                            <img src="./src/img/user.svg" alt="${request.fromUser.name}">
+                        </div>
+                        <div class="result-info">
+                            <h4>${request.fromUser.name || 'Без имени'}</h4>
+                            <p>${request.fromUser.email}</p>
+                        </div>
+                        <div class="request-actions">
+                            <button class="btn btn-primary btn-small accept-request-btn" data-request-id="${request.id}">
+                                Принять
+                            </button>
+                            <button class="btn btn-danger btn-small decline-request-btn" data-request-id="${request.id}">
+                                Отклонить
+                            </button>
+                        </div>
+                    </div>
+                `).join('')}
+            </div>
+        `;
+    }
+
+    acceptFriendRequest(requestId) {
+        const success = this.db.acceptFriendRequest(requestId);
+        if (success) {
+            if (window.UI) {
+                window.UI.showNotification('Запрос на дружбу принят', 'success');
+            }
+            this.renderFriendsList();
+            this.renderFriendRequests();
+        } else {
+            if (window.UI) {
+                window.UI.showNotification('Не удалось принять запрос', 'error');
+            }
+        }
+    }
+
+    declineFriendRequest(requestId) {
+        const success = this.db.declineFriendRequest(requestId);
+        if (success) {
+            if (window.UI) {
+                window.UI.showNotification('Запрос на дружбу отклонен', 'info');
+            }
+            this.renderFriendRequests();
+        } else {
+            if (window.UI) {
+                window.UI.showNotification('Не удалось отклонить запрос', 'error');
             }
         }
     }

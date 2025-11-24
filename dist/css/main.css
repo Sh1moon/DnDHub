@@ -5101,8 +5101,13 @@
 }
 .friends-manager__content {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: 1fr 1fr 1fr;
   gap: 3rem;
+}
+@media (max-width: 1200px) {
+  .friends-manager__content {
+    grid-template-columns: 1fr 1fr;
+  }
 }
 @media (max-width: 768px) {
   .friends-manager__content {
@@ -5214,6 +5219,46 @@
   font-weight: normal;
   margin: 0;
   opacity: 0.8;
+}
+
+.friends-requests-section {
+  background: rgb(24.375, 48.75, 73.125);
+  border: 2px solid #C3955A;
+  border-radius: 8px;
+  padding: 2rem;
+}
+.friends-requests-section h3 {
+  font-size: 1.5rem;
+  color: #C3955A;
+  font-family: "Slovic", serif;
+  font-weight: normal;
+  margin-bottom: 1.5rem;
+}
+
+.friends-requests-list {
+  min-height: 200px;
+}
+
+.friend-request-item {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  padding: 1.5rem;
+  background: rgba(195, 149, 90, 0.1);
+  border: 2px solid rgba(195, 149, 90, 0.3);
+  border-radius: 8px;
+  margin-bottom: 1rem;
+  transition: all 0.2s ease;
+}
+.friend-request-item:hover {
+  background: rgba(195, 149, 90, 0.15);
+  border-color: rgba(195, 149, 90, 0.5);
+}
+
+.request-actions {
+  display: flex;
+  gap: 1rem;
+  margin-left: auto;
 }
 
 .friends-list-section {

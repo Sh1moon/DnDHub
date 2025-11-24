@@ -388,26 +388,115 @@ class Database {
         return (user.friends || []).map(friendId => users.find(u => u.id === friendId)).filter(Boolean);
     }
 
-    addFriend(userId, friendId) {
+    // Запросы на дружбу
+    sendFriendRequest(fromUserId, toUserId) {
         const users = this.getData('users') || [];
-        const user = users.find(u => u.id === userId);
-        if (!user) return false;
+        const fromUser = users.find(u => u.id === fromUserId);
+        const toUser = users.find(u => u.id === toUserId);
         
-        if (!user.friends) user.friends = [];
-        if (!user.friends.includes(friendId)) {
-            user.friends.push(friendId);
-            this.updateData('users', users);
-            return true;
+        if (!fromUser || !toUser) return false;
+        if (fromUserId === toUserId) return false;
+        
+        // Проверяем, не друзья ли уже
+        if (fromUser.friends && fromUser.friends.includes(toUserId)) return false;
+        
+        // Проверяем, не отправлен ли уже запрос
+        const friendRequests = this.getData('friendRequests') || [];
+        const existingRequest = friendRequests.find(r => 
+            (r.fromUserId === fromUserId && r.toUserId === toUserId) ||
+            (r.fromUserId === toUserId && r.toUserId === fromUserId)
+        );
+        if (existingRequest) return false;
+        
+        // Создаем запрос
+        const request = {
+            id: Date.now(),
+            fromUserId: fromUserId,
+            toUserId: toUserId,
+            status: 'pending',
+            createdAt: new Date().toISOString()
+        };
+        
+        friendRequests.push(request);
+        this.updateData('friendRequests', friendRequests);
+        return true;
+    }
+
+    getFriendRequests(userId) {
+        const friendRequests = this.getData('friendRequests') || [];
+        const users = this.getData('users') || [];
+        
+        return friendRequests
+            .filter(r => r.toUserId === userId && r.status === 'pending')
+            .map(r => {
+                const fromUser = users.find(u => u.id === r.fromUserId);
+                return {
+                    ...r,
+                    fromUser: fromUser
+                };
+            })
+            .filter(r => r.fromUser);
+    }
+
+    acceptFriendRequest(requestId) {
+        const friendRequests = this.getData('friendRequests') || [];
+        const users = this.getData('users') || [];
+        
+        const request = friendRequests.find(r => r.id === requestId);
+        if (!request || request.status !== 'pending') return false;
+        
+        // Добавляем друзей друг другу
+        const fromUser = users.find(u => u.id === request.fromUserId);
+        const toUser = users.find(u => u.id === request.toUserId);
+        
+        if (!fromUser || !toUser) return false;
+        
+        if (!fromUser.friends) fromUser.friends = [];
+        if (!toUser.friends) toUser.friends = [];
+        
+        if (!fromUser.friends.includes(request.toUserId)) {
+            fromUser.friends.push(request.toUserId);
         }
-        return false;
+        if (!toUser.friends.includes(request.fromUserId)) {
+            toUser.friends.push(request.fromUserId);
+        }
+        
+        // Обновляем статус запроса
+        request.status = 'accepted';
+        request.acceptedAt = new Date().toISOString();
+        
+        this.updateData('users', users);
+        this.updateData('friendRequests', friendRequests);
+        return true;
+    }
+
+    declineFriendRequest(requestId) {
+        const friendRequests = this.getData('friendRequests') || [];
+        const request = friendRequests.find(r => r.id === requestId);
+        
+        if (!request || request.status !== 'pending') return false;
+        
+        request.status = 'declined';
+        request.declinedAt = new Date().toISOString();
+        
+        this.updateData('friendRequests', friendRequests);
+        return true;
     }
 
     removeFriend(userId, friendId) {
         const users = this.getData('users') || [];
         const user = users.find(u => u.id === userId);
-        if (!user || !user.friends) return false;
+        const friend = users.find(u => u.id === friendId);
         
-        user.friends = user.friends.filter(id => id !== friendId);
+        if (!user || !friend) return false;
+        
+        if (user.friends) {
+            user.friends = user.friends.filter(id => id !== friendId);
+        }
+        if (friend.friends) {
+            friend.friends = friend.friends.filter(id => id !== userId);
+        }
+        
         this.updateData('users', users);
         return true;
     }

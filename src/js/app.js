@@ -806,6 +806,10 @@ class App {
                         </div>
                         <div id="friendSearchResults" class="search-results"></div>
                     </div>
+                    <div class="friends-requests-section">
+                        <h3>Входящие запросы</h3>
+                        <div id="friendRequestsList" class="friends-requests-list"></div>
+                    </div>
                     <div class="friends-list-section">
                         <h3>Мои друзья</h3>
                         <div id="friendsList" class="friends-list"></div>

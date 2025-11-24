@@ -14,8 +14,11 @@
 
     &__content
         display: grid
-        grid-template-columns: 1fr 1fr
+        grid-template-columns: 1fr 1fr 1fr
         gap: $spacing-xl
+
+        @media (max-width: 1200px)
+            grid-template-columns: 1fr 1fr
 
         @media (max-width: 768px)
             grid-template-columns: 1fr
@@ -90,6 +93,39 @@
         +text-style(0.9rem, $text-color, $font-secondary)
         margin: 0
         opacity: 0.8
+
+.friends-requests-section
+    background: $bg-light
+    border: 2px solid $accent-color
+    border-radius: $border-radius
+    padding: $spacing-lg
+
+    h3
+        +text-style(1.5rem, $accent-color, $font-primary)
+        margin-bottom: $spacing-md
+
+.friends-requests-list
+    min-height: 200px
+
+.friend-request-item
+    display: flex
+    align-items: center
+    gap: $spacing-md
+    padding: $spacing-md
+    background: rgba($accent-color, 0.1)
+    border: 2px solid rgba($accent-color, 0.3)
+    border-radius: $border-radius
+    margin-bottom: $spacing-sm
+    +transition(all, 0.2s)
+
+    &:hover
+        background: rgba($accent-color, 0.15)
+        border-color: rgba($accent-color, 0.5)
+
+.request-actions
+    display: flex
+    gap: $spacing-sm
+    margin-left: auto
 
 .friends-list-section
     background: $bg-light
