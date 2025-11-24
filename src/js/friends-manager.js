@@ -77,7 +77,7 @@ class FriendsManager {
                         ${friends.map(friend => `
                             <div class="friend-card" data-friend-id="${friend.id}">
                                 <div class="friend-avatar">
-                                    <img src="./src/img/user.svg" alt="${friend.name}">
+                                    <img src="./src/img/user.svg" alt="${friend.name}" loading="lazy">
                                 </div>
                                 <div class="friend-info">
                                     <h4>${friend.name || 'Без имени'}</h4>
@@ -133,7 +133,7 @@ class FriendsManager {
                     return `
                         <div class="search-result-item">
                             <div class="result-avatar">
-                                <img src="./src/img/user.svg" alt="${user.name}">
+                                <img src="./src/img/user.svg" alt="${user.name}" loading="lazy">
                             </div>
                             <div class="result-info">
                                 <h4>${user.name || 'Без имени'}</h4>
@@ -199,7 +199,7 @@ class FriendsManager {
                 ${requests.map(request => `
                     <div class="friend-request-item" data-request-id="${request.id}">
                         <div class="result-avatar">
-                            <img src="./src/img/user.svg" alt="${request.fromUser.name}">
+                            <img src="./src/img/user.svg" alt="${request.fromUser.name}" loading="lazy">
                         </div>
                         <div class="result-info">
                             <h4>${request.fromUser.name || 'Без имени'}</h4>

@@ -141,6 +141,7 @@ class CharacterManager {
                              data-race-id="${race.id}">
                             <img src="${race.фото || 'src/img/races/human.png'}" 
                                  alt="${race.название}" 
+                                 loading="lazy"
                                  onerror="this.src='./src/img/races/human.png'">
                             <div class="card-content">
                                 <h3>${race.название}</h3>
@@ -200,6 +201,7 @@ class CharacterManager {
                          data-class-id="${cls.id}">
                         <img src="${cls.фото || 'src/img/classes/fighter.png'}" 
                              alt="${cls.название}" 
+                             loading="lazy"
                              onerror="this.src='./src/img/classes/fighter.png'">
                         <div class="card-content">
                             <h3>${cls.название}</h3>
@@ -344,6 +346,7 @@ class CharacterManager {
                              data-item-id="${item.id}">
                             <img src="${photoPath}" 
                                  alt="${item.название}" 
+                                 loading="lazy"
                                  onerror="this.src='./src/img/items/default.png'">
                             <div class="card-content">
                                 <h3>${item.название}</h3>

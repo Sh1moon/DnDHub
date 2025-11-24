@@ -32,6 +32,7 @@ class CharacterList {
                         <div class="character-card" data-character-id="${char.id}">
                             <img src="${char.race?.фото || './src/img/classes/fighter.png'}" 
                                  alt="${char.name}" 
+                                 loading="lazy"
                                  onerror="this.src='./src/img/classes/fighter.png'">
                             <div class="card-content">
                                 <h3>${char.name || 'Без имени'}</h3>

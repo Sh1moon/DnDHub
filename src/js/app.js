@@ -459,15 +459,15 @@ class App {
                 <div class="slider__inner">
                     <div class="slider__content active">
                         <h2 class="slider__txt">Твори</h2>
-                        <img src="src/img/tvori.png" alt="Твори" class="slider__img">
+                        <img src="src/img/tvori.png" alt="Твори" class="slider__img" loading="lazy">
                     </div>
                     <div class="slider__content">
                         <h2 class="slider__txt">Играй</h2>
-                        <img src="src/img/Play.png" alt="Играй" class="slider__img">
+                        <img src="src/img/Play.png" alt="Играй" class="slider__img" loading="lazy">
                     </div>
                     <div class="slider__content">
                         <h2 class="slider__txt">Изучай</h2>
-                        <img src="src/img/Izuchay.png" alt="Изучай" class="slider__img">
+                        <img src="src/img/Izuchay.png" alt="Изучай" class="slider__img" loading="lazy">
                     </div>
                 </div>
                 <button class="slider-arrow slider-next" id="sliderNext">
@@ -499,27 +499,27 @@ class App {
 
             <!-- Футер -->
             <footer class="footer">
-                <img src="src/img/corner.svg" alt="" class="cornerLeft">
+                <img src="src/img/corner.svg" alt="" class="cornerLeft" loading="lazy">
                 <div class="footer__content">
                     <ul class="footer__list">
                         <a href="#spellbook" class="txt link protected-link" data-route="spellbook"><li class="footer__item">Играть</li></a>
                         <a href="#character-creator" class="txt link protected-link" data-route="character-creator"><li class="footer__item">Создать персонажа</li></a>
                         <a href="#rooms" class="txt link protected-link" data-route="rooms"><li class="footer__item">Создать комнату</li></a>
                     </ul>
-                    <a href="#home" data-route="home"><img src="./src/img/logo.svg" alt="Логотип" style="width: 13rem"></a>
+                    <a href="#home" data-route="home"><img src="./src/img/logo.svg" alt="Логотип" style="width: 13rem" loading="lazy"></a>
                     <div class="social">
                         <a href="#">
-                            <img src="src/img/telegram.svg" alt="Telegram" class="logo">
+                            <img src="src/img/telegram.svg" alt="Telegram" class="logo" loading="lazy">
                         </a>
                         <a href="#">
-                            <img src="src/img/vk.svg" alt="VK" class="logo">
+                            <img src="src/img/vk.svg" alt="VK" class="logo" loading="lazy">
                         </a>
                         <a href="#">
-                            <img src="src/img/whatsapp.svg" alt="WhatsApp" class="logo">
+                            <img src="src/img/whatsapp.svg" alt="WhatsApp" class="logo" loading="lazy">
                         </a>
                     </div>
                 </div>
-                <img src="./src/img/corner.svg" alt="" class="cornerRight">
+                <img src="./src/img/corner.svg" alt="" class="cornerRight" loading="lazy">
             </footer>
         `;
         this.initSlider();

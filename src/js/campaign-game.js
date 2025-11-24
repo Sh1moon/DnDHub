@@ -231,7 +231,7 @@ class CampaignGame {
             return `
                 <div class="character-card-horizontal" data-character-id="${character.id}">
                     <div class="character-card__icon">
-                        <img src="${classIcon}" alt="${className}" onerror="this.src='./src/img/classes/fighter.png'">
+                        <img src="${classIcon}" alt="${className}" loading="lazy" onerror="this.src='./src/img/classes/fighter.png'">
                     <div class="character-card__class">${className.toUpperCase()}</div>
 
                     </div>
@@ -260,7 +260,7 @@ class CampaignGame {
             return `
                 <div class="participant-item">
                     <div class="participant-avatar">
-                        <img src="${character?.race?.фото || 'src/img/user.svg'}" alt="${p.userName}">
+                        <img src="${character?.race?.фото || 'src/img/user.svg'}" alt="${p.userName}" loading="lazy">
                         <span class="participant-status online"></span>
                     </div>
                     <div class="participant-info">
@@ -477,6 +477,7 @@ class CampaignGame {
                             return `
                                 <div class="item-card" data-item-id="${item.id}">
                                     <img src="${photoPath}" alt="${item.название}" 
+                                         loading="lazy"
                                          onerror="this.src='./src/img/items/default.png'">
                                     <div class="card-content">
                                         <h3>${item.название}</h3>
@@ -789,6 +790,7 @@ class CampaignGame {
             return `
                 <div class="spell-list-item" data-spell-id="${spell.id}">
                     <img src="${photoPath}" alt="${spell.название}" 
+                         loading="lazy"
                          onerror="this.src='./src/img/spells/default.png'"
                          class="spell-list-icon">
                     <div class="spell-list-info">
@@ -949,6 +951,7 @@ class CampaignGame {
             <div class="spell-details-content">
                 <div class="spell-details-header">
                     <img src="${photoPath}" alt="${spell.название}" 
+                         loading="lazy"
                          onerror="this.src='./src/img/spells/default.png'"
                          class="spell-details-image">
                     <div class="spell-details-title">
