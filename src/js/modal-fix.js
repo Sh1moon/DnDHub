@@ -117,7 +117,14 @@
         });
         
         // Предотвращаем закрытие при клике на содержимое модального окна
+        // НО не блокируем клики внутри модальных окон кампании (campaign-tab-modal)
         document.addEventListener('click', function(e) {
+            // Пропускаем клики внутри модальных окон кампании
+            const campaignModal = e.target.closest('.campaign-tab-modal');
+            if (campaignModal) {
+                return; // Не блокируем события внутри модальных окон кампании
+            }
+            
             const modalContent = e.target.closest('.modal__content') || 
                                (e.target.closest('.modal') && !e.target.closest('.modal-overlay'));
             if (modalContent) {

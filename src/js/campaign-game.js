@@ -551,6 +551,14 @@ class CampaignGame {
 
         // Закрытие по клику на overlay
         modalOverlay.onclick = (e) => {
+            // Не закрываем, если клик был на элемент списка заклинаний или его содержимое
+            if (e.target.closest('.spell-list-item') || 
+                e.target.closest('.spells-list') ||
+                e.target.closest('.spell-details') ||
+                e.target.closest('.spells-modal-container')) {
+                return;
+            }
+            
             if (e.target === modalOverlay) {
                 e.preventDefault();
                 e.stopPropagation();
@@ -835,9 +843,12 @@ class CampaignGame {
                 return;
             }
             
+            // Останавливаем распространение события ДО всех проверок
             e.preventDefault();
             e.stopPropagation();
             e.stopImmediatePropagation();
+            
+            console.log('Клик на spell-list-item, ID:', item.dataset.spellId);
             
             const id = parseInt(item.dataset.spellId);
             if (isNaN(id)) {
@@ -858,6 +869,7 @@ class CampaignGame {
                 return;
             }
             
+            console.log('Отображаем детали заклинания:', spell.название);
             selectedSpellId = id;
             this.renderSpellDetails(spell, currentSpellDetailsContainer);
             
@@ -871,38 +883,64 @@ class CampaignGame {
             item.classList.add('selected');
         };
 
-        // Привязываем обработчик к modalBody для надежности (capture phase)
-        modalBody.addEventListener('click', handleSpellItemClick, true);
+        // Привязываем обработчик к modalBody для надежности (capture phase, самый высокий приоритет)
+        // Используем capture: true чтобы перехватить событие ДО глобальных обработчиков
+        modalBody.addEventListener('click', handleSpellItemClick, { capture: true, passive: false });
         
         // Также привязываем напрямую к spellsListContainer для дополнительной надежности
-        spellsListContainer.addEventListener('click', handleSpellItemClick, true);
+        spellsListContainer.addEventListener('click', handleSpellItemClick, { capture: true, passive: false });
         
         // Добавляем обработчик напрямую к элементам после их создания
         const attachDirectHandlers = () => {
-            const items = spellsListContainer.querySelectorAll('.spell-list-item');
+            const currentSpellsListContainer = modalBody.querySelector('#spellsListContainer');
+            if (!currentSpellsListContainer) {
+                console.error('Контейнер списка заклинаний не найден для привязки обработчиков');
+                return;
+            }
+            
+            const items = currentSpellsListContainer.querySelectorAll('.spell-list-item');
+            console.log('Найдено элементов списка заклинаний:', items.length);
+            
             items.forEach(item => {
-                // Добавляем обработчик напрямую к элементу
-                item.addEventListener('click', (e) => {
+                // Удаляем старые обработчики, если они есть (через клонирование)
+                const newItem = item.cloneNode(true);
+                item.parentNode.replaceChild(newItem, item);
+                
+                // Добавляем новый обработчик напрямую к элементу
+                newItem.addEventListener('click', (e) => {
                     e.preventDefault();
                     e.stopPropagation();
                     e.stopImmediatePropagation();
                     
-                    const id = parseInt(item.dataset.spellId);
-                    if (isNaN(id)) return;
+                    console.log('Прямой обработчик: клик на элемент, ID:', newItem.dataset.spellId);
+                    
+                    const id = parseInt(newItem.dataset.spellId);
+                    if (isNaN(id)) {
+                        console.error('Неверный ID в прямом обработчике');
+                        return;
+                    }
                     
                     const spell = this.db.getSpells().find(s => s.id === id);
-                    if (!spell) return;
+                    if (!spell) {
+                        console.error('Заклинание не найдено в прямом обработчике');
+                        return;
+                    }
                     
                     const currentSpellDetailsContainer = modalBody.querySelector('#spellDetailsContainer');
-                    if (!currentSpellDetailsContainer) return;
+                    if (!currentSpellDetailsContainer) {
+                        console.error('Контейнер для деталей не найден в прямом обработчике');
+                        return;
+                    }
                     
+                    console.log('Прямой обработчик: отображаем детали заклинания:', spell.название);
                     selectedSpellId = id;
                     this.renderSpellDetails(spell, currentSpellDetailsContainer);
                     
                     // Подсветка выбранного элемента
-                    items.forEach(i => i.classList.remove('selected'));
-                    item.classList.add('selected');
-                }, true);
+                    const allItems = currentSpellsListContainer.querySelectorAll('.spell-list-item');
+                    allItems.forEach(i => i.classList.remove('selected'));
+                    newItem.classList.add('selected');
+                }, { capture: true, passive: false });
             });
         };
         
