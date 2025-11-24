@@ -3,5 +3,5 @@ node_modules/
 .DS_Store
 .vscode/
 .idea/
-# Не исключаем dist/, так как он нужен для GitHub Pages
+# dist/ не исключаем, так как он нужен для GitHub Pages
 

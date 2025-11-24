@@ -451,7 +451,7 @@ class App {
             <!-- Слайдер -->
             <section class="slider">
                 <button class="slider-arrow slider-prev" id="sliderPrev">
-                    <img src="src/img/slideArrow.svg" alt="Стрелка влево" style="width:174px">
+                    <img src="./src/img/slideArrow.svg" alt="Стрелка влево" style="width:174px">
                 </button>
                 <div class="slider__inner">
                     <div class="slider__content active">
@@ -468,7 +468,7 @@ class App {
                     </div>
                 </div>
                 <button class="slider-arrow slider-next" id="sliderNext">
-                    <img src="src/img/slideArrow.svg" alt="Стрелка вправо" style="width:174px;transform:rotate(180deg)">
+                    <img src="./src/img/slideArrow.svg" alt="Стрелка вправо" style="width:174px;transform:rotate(180deg)">
                 </button>
             </section>
 
@@ -503,7 +503,7 @@ class App {
                         <a href="#character-creator" class="txt link protected-link" data-route="character-creator"><li class="footer__item">Создать персонажа</li></a>
                         <a href="#rooms" class="txt link protected-link" data-route="rooms"><li class="footer__item">Создать комнату</li></a>
                     </ul>
-                    <a href="#home" data-route="home"><img src="src/img/logo.svg" alt="Логотип" style="width: 13rem"></a>
+                    <a href="#home" data-route="home"><img src="./src/img/logo.svg" alt="Логотип" style="width: 13rem"></a>
                     <div class="social">
                         <a href="#">
                             <img src="src/img/telegram.svg" alt="Telegram" class="logo">
@@ -516,7 +516,7 @@ class App {
                         </a>
                     </div>
                 </div>
-                <img src="src/img/corner.svg" alt="" class="cornerRight">
+                <img src="./src/img/corner.svg" alt="" class="cornerRight">
             </footer>
         `;
         this.initSlider();

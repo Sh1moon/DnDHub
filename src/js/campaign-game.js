@@ -226,12 +226,12 @@ class CampaignGame {
             const characterName = character.name || 'Без имени';
 
             // Получаем иконку класса
-            const classIcon = character.class?.фото || character.race?.фото || 'src/img/classes/fighter.png';
+            const classIcon = character.class?.фото || character.race?.фото || './src/img/classes/fighter.png';
 
             return `
                 <div class="character-card-horizontal" data-character-id="${character.id}">
                     <div class="character-card__icon">
-                        <img src="${classIcon}" alt="${className}" onerror="this.src='src/img/classes/fighter.png'">
+                        <img src="${classIcon}" alt="${className}" onerror="this.src='./src/img/classes/fighter.png'">
                     <div class="character-card__class">${className.toUpperCase()}</div>
 
                     </div>
@@ -473,11 +473,11 @@ class CampaignGame {
                 modalContent = `
                     <div class="spellbook__monsters-grid items-grid-modal">
                         ${items.map(item => {
-                            const photoPath = item.фото || `src/img/items/${item.id || 'default'}.png`;
+                            const photoPath = item.фото || `./src/img/items/${item.id || 'default'}.png`;
                             return `
                                 <div class="item-card" data-item-id="${item.id}">
                                     <img src="${photoPath}" alt="${item.название}" 
-                                         onerror="this.src='src/img/items/default.png'">
+                                         onerror="this.src='./src/img/items/default.png'">
                                     <div class="card-content">
                                         <h3>${item.название}</h3>
                                         <p class="item-description">${item.описание ? (item.описание.length > 100 ? item.описание.substring(0, 100) + '...' : item.описание) : 'Описание отсутствует'}</p>
@@ -789,7 +789,7 @@ class CampaignGame {
             return `
                 <div class="spell-list-item" data-spell-id="${spell.id}">
                     <img src="${photoPath}" alt="${spell.название}" 
-                         onerror="this.src='src/img/spells/default.png'"
+                         onerror="this.src='./src/img/spells/default.png'"
                          class="spell-list-icon">
                     <div class="spell-list-info">
                         <div class="spell-list-name">${spell.название}</div>
@@ -949,7 +949,7 @@ class CampaignGame {
             <div class="spell-details-content">
                 <div class="spell-details-header">
                     <img src="${photoPath}" alt="${spell.название}" 
-                         onerror="this.src='src/img/spells/default.png'"
+                         onerror="this.src='./src/img/spells/default.png'"
                          class="spell-details-image">
                     <div class="spell-details-title">
                         <h2>${spell.название}</h2>

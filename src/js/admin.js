@@ -1586,7 +1586,7 @@ class AdminPanel {
         const confirmed2 = await window.confirmModal('Это действие необратимо! Продолжить?', 'Финальное подтверждение', 'Да, сбросить', 'Отмена');
         if (!confirmed2) return;
         
-        fetch('src/data/DB.json')
+        fetch('./src/data/DB.json')
             .then(response => response.json())
             .then(data => {
                 const currentData = this.db.getData();

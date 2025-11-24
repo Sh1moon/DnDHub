@@ -373,7 +373,7 @@ class Spellbook {
     renderItemDetails(type, item) {
         // Проверяем наличие фото для всех типов
         const hasPhoto = item.фото || (type === 'spell' && item.id);
-        const photoPath = item.фото || (type === 'spell' ? `src/img/spells/${item.id || 'default'}.png` : null);
+        const photoPath = item.фото || (type === 'spell' ? `./src/img/spells/${item.id || 'default'}.png` : null);
         
         switch (type) {
             case 'spell':
@@ -381,7 +381,7 @@ class Spellbook {
                     <div class="item-details-layout">
                         ${hasPhoto ? `
                             <div class="item-details-image">
-                                <img src="${photoPath}" alt="${item.название}" onerror="this.src='src/img/spells/default.png'">
+                                <img src="${photoPath}" alt="${item.название}" onerror="this.src='./src/img/spells/default.png'">
                             </div>
                         ` : ''}
                         <div class="item-details-content">
@@ -422,7 +422,7 @@ class Spellbook {
                     <div class="item-details-layout">
                         ${hasPhoto ? `
                             <div class="item-details-image">
-                                <img src="${item.фото}" alt="${item.название}" onerror="this.src='src/img/items/longsword.png'">
+                                <img src="${item.фото}" alt="${item.название}" onerror="this.src='./src/img/items/longsword.png'">
                             </div>
                         ` : ''}
                         <div class="item-details-content">
@@ -441,7 +441,7 @@ class Spellbook {
                     <div class="item-details-layout">
                         ${hasPhoto ? `
                             <div class="item-details-image">
-                                <img src="${item.фото}" alt="${item.название}" onerror="this.src='src/img/races/human.png'">
+                                <img src="${item.фото}" alt="${item.название}" onerror="this.src='./src/img/races/human.png'">
                             </div>
                         ` : ''}
                         <div class="item-details-content">
@@ -463,7 +463,7 @@ class Spellbook {
                     <div class="item-details-layout">
                         ${hasPhoto ? `
                             <div class="item-details-image">
-                                <img src="${item.фото}" alt="${item.название}" onerror="this.src='src/img/classes/fighter.png'">
+                                <img src="${item.фото}" alt="${item.название}" onerror="this.src='./src/img/classes/fighter.png'">
                             </div>
                         ` : ''}
                         <div class="item-details-content">
@@ -636,7 +636,7 @@ class Spellbook {
                     return `
                         <div class="spell-card" data-spell-id="${spell.id}">
                             <img src="${photoPath}" alt="${spell.название}" 
-                                 onerror="this.src='src/img/spells/default.png'">
+                                 onerror="this.src='./src/img/spells/default.png'">
                             <div class="card-content">
                                 <h3>${spell.название}</h3>
                                 <p class="spell-description">${spell.описание ? (spell.описание.length > 100 ? spell.описание.substring(0, 100) + '...' : spell.описание) : 'Описание отсутствует'}</p>
@@ -689,7 +689,7 @@ class Spellbook {
                     <div class="monster-card" data-monster-id="${monster.id}">
                         <img src="${monster.фото || 'src/img/monsters/goblin.png'}" 
                              alt="${monster.название}" 
-                             onerror="this.src='src/img/monsters/goblin.png'">
+                             onerror="this.src='./src/img/monsters/goblin.png'">
                         <div class="card-content">
                             <h3>${monster.название}</h3>
                             <div class="stats">
@@ -738,7 +738,7 @@ class Spellbook {
                     <div class="item-card" data-item-id="${item.id}">
                         <img src="${item.фото || 'src/img/items/longsword.png'}" 
                              alt="${item.название}" 
-                             onerror="this.src='src/img/items/longsword.png'">
+                             onerror="this.src='./src/img/items/longsword.png'">
                         <div class="card-content">
                             <h3>${item.название}</h3>
                             <p><strong>Тип:</strong> ${item.тип}</p>
@@ -781,7 +781,7 @@ class Spellbook {
                         <div class="race-card" data-race-id="${race.id}">
                             <img src="${race.фото || 'src/img/races/human.png'}" 
                                  alt="${race.название}" 
-                                 onerror="this.src='src/img/races/human.png'">
+                                 onerror="this.src='./src/img/races/human.png'">
                             <div class="card-content">
                                 <h3>${race.название}</h3>
                                 <p class="race-description">${race.описание ? (race.описание.length > 100 ? race.описание.substring(0, 100) + '...' : race.описание) : ''}</p>
@@ -824,7 +824,7 @@ class Spellbook {
                     <div class="class-card" data-class-id="${cls.id}">
                         <img src="${cls.фото || 'src/img/classes/fighter.png'}" 
                              alt="${cls.название}" 
-                             onerror="this.src='src/img/classes/fighter.png'">
+                             onerror="this.src='./src/img/classes/fighter.png'">
                         <div class="card-content">
                             <h3>${cls.название}</h3>
                             <p class="class-description">${cls.описание ? (cls.описание.length > 100 ? cls.описание.substring(0, 100) + '...' : cls.описание) : ''}</p>

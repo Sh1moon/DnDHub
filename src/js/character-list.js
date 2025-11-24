@@ -30,9 +30,9 @@ class CharacterList {
                         </div>
                     ` : characters.map(char => `
                         <div class="character-card" data-character-id="${char.id}">
-                            <img src="${char.race?.фото || 'src/img/classes/fighter.png'}" 
+                            <img src="${char.race?.фото || './src/img/classes/fighter.png'}" 
                                  alt="${char.name}" 
-                                 onerror="this.src='src/img/classes/fighter.png'">
+                                 onerror="this.src='./src/img/classes/fighter.png'">
                             <div class="card-content">
                                 <h3>${char.name || 'Без имени'}</h3>
                                 <p class="character-description">${char.race?.название || 'N/A'} ${char.class?.название || ''}</p>
@@ -93,7 +93,7 @@ class CharacterList {
                             <img src="${race.фото || 'src/img/classes/fighter.png'}" 
                                  alt="${character.name}" 
                                  class="character-details__image"
-                                 onerror="this.src='src/img/classes/fighter.png'">
+                                 onerror="this.src='./src/img/classes/fighter.png'">
                             <div class="character-details__info">
                                 <h2>${character.name || 'Без имени'}</h2>
                                 <p><strong>Раса:</strong> ${race.название || 'N/A'}</p>

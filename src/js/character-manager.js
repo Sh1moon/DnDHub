@@ -141,7 +141,7 @@ class CharacterManager {
                              data-race-id="${race.id}">
                             <img src="${race.фото || 'src/img/races/human.png'}" 
                                  alt="${race.название}" 
-                                 onerror="this.src='src/img/races/human.png'">
+                                 onerror="this.src='./src/img/races/human.png'">
                             <div class="card-content">
                                 <h3>${race.название}</h3>
                                 <p class="race-description">${race.описание ? (race.описание.length > 100 ? race.описание.substring(0, 100) + '...' : race.описание) : ''}</p>
@@ -200,7 +200,7 @@ class CharacterManager {
                          data-class-id="${cls.id}">
                         <img src="${cls.фото || 'src/img/classes/fighter.png'}" 
                              alt="${cls.название}" 
-                             onerror="this.src='src/img/classes/fighter.png'">
+                             onerror="this.src='./src/img/classes/fighter.png'">
                         <div class="card-content">
                             <h3>${cls.название}</h3>
                             <p class="class-description">${cls.описание ? (cls.описание.length > 100 ? cls.описание.substring(0, 100) + '...' : cls.описание) : ''}</p>
@@ -338,13 +338,13 @@ class CharacterManager {
                 <h3>Выберите начальное снаряжение</h3>
                 <div class="equipment-grid">
                     ${items.map(item => {
-                        const photoPath = item.фото || `src/img/items/${item.id || 'default'}.png`;
+                        const photoPath = item.фото || `./src/img/items/${item.id || 'default'}.png`;
                         return `
                         <div class="equipment-item ${this.characterData.equipment.includes(item.id) ? 'selected' : ''}" 
                              data-item-id="${item.id}">
                             <img src="${photoPath}" 
                                  alt="${item.название}" 
-                                 onerror="this.src='src/img/items/default.png'">
+                                 onerror="this.src='./src/img/items/default.png'">
                             <div class="card-content">
                                 <h3>${item.название}</h3>
                                 <p class="item-description">${item.описание ? (item.описание.length > 100 ? item.описание.substring(0, 100) + '...' : item.описание) : ''}</p>

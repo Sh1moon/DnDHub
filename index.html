@@ -4,12 +4,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dungeon Master's Hub</title>
-    <link rel="stylesheet" href="dist/css/main.css">
-    <link rel="icon" href="src/img/favicon.svg" type="image/svg+xml">
+    <link rel="stylesheet" href="./dist/css/main.css">
+    <link rel="icon" href="./src/img/favicon.svg" type="image/svg+xml">
 </head>
 <body>
     <nav class="navbar">
-        <img src="src/img/logo.svg" alt="Логотип" class="logo" data-route="home">
+        <img src="./src/img/logo.svg" alt="Логотип" class="logo" data-route="home">
         <ul class="nav-links">
             <li><a href="#character-creator" class="nav-link protected-link" data-route="character-creator">Создать персонажа</a></li>
             <li><a href="#characters" class="nav-link protected-link" data-route="characters">Мои персонажи</a></li>
@@ -18,7 +18,7 @@
         </ul>
         <div class="user-section">
             <span class="user-name" id="userName"></span>
-            <img src="src/img/user.svg" alt="Пользователь" class="user-icon" id="userIcon">
+            <img src="./src/img/user.svg" alt="Пользователь" class="user-icon" id="userIcon">
             <div class="user-menu" id="userMenu">
                 <div class="user-menu__info">
                     <div class="user-menu__name" id="userMenuName"></div>
@@ -88,18 +88,18 @@
     <div class="notification" id="notification"></div>
 
     <!-- Подключение JavaScript модулей -->
-    <script src="src/js/admin.js"></script>
-    <script src="src/js/database.js"></script>
-    <script src="src/js/auth.js"></script>
-    <script src="src/js/ui-components.js"></script>
-    <script src="src/js/confirm-modal.js"></script>
-    <script src="src/js/modal-fix.js"></script>
-    <script src="src/js/character-manager.js"></script>
-    <script src="src/js/character-list.js"></script>
-    <script src="src/js/room-manager.js"></script>
-    <script src="src/js/spellbook.js"></script>
-    <script src="src/js/campaign-game.js"></script>
-    <script src="src/js/app.js"></script>
+    <script src="./src/js/admin.js"></script>
+    <script src="./src/js/database.js"></script>
+    <script src="./src/js/auth.js"></script>
+    <script src="./src/js/ui-components.js"></script>
+    <script src="./src/js/confirm-modal.js"></script>
+    <script src="./src/js/modal-fix.js"></script>
+    <script src="./src/js/character-manager.js"></script>
+    <script src="./src/js/character-list.js"></script>
+    <script src="./src/js/room-manager.js"></script>
+    <script src="./src/js/spellbook.js"></script>
+    <script src="./src/js/campaign-game.js"></script>
+    <script src="./src/js/app.js"></script>
 
     <!-- Обработчики меню пользователя управляются через app.js -->
 </body>

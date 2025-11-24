@@ -8,7 +8,7 @@ class Database {
         const db = localStorage.getItem('dnd_database');
         if (!db) {
             // Загружаем данные из DB.json
-            fetch('src/data/DB.json')
+            fetch('./src/data/DB.json')
                 .then(response => response.json())
                 .then(data => {
                     // Добавляем пустые массивы для пользователей и комнат если их нет
@@ -321,7 +321,7 @@ class Database {
     // Обновление базы данных из DB.json
     async updateFromDBJson() {
         try {
-            const response = await fetch('src/data/DB.json');
+            const response = await fetch('./src/data/DB.json');
             if (!response.ok) {
                 throw new Error('Не удалось загрузить DB.json');
             }
