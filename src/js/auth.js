@@ -113,3 +113,8 @@ class Auth {
     }
 }
 
+// Экспорт для использования в других модулях
+if (typeof window !== 'undefined') {
+    window.Auth = Auth;
+}
+

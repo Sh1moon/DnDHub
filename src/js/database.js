@@ -451,6 +451,9 @@ class Database {
 }
 
 // Экспорт для использования в других модулях
+if (typeof window !== 'undefined') {
+    window.Database = Database;
+}
 if (typeof module !== 'undefined' && module.exports) {
     module.exports = Database;
 }
