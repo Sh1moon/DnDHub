@@ -379,7 +379,6 @@ class Database {
             return false;
         }
     }
-}
 
     // Управление друзьями
     getFriends(userId) {
