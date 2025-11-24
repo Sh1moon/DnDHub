@@ -1,0 +1,185 @@
+@use "sass:color"
+@use '../utils/variables' as *
+@use '../utils/mixins' as *
+
+.characters-list
+    max-width: 1400px
+    margin: $spacing-lg auto
+    padding: $spacing-lg
+
+    &__header
+        +flex-between
+        margin-bottom: $spacing-xl
+
+        h2
+            +text-style(2rem, $accent-color, $font-primary)
+
+        a.btn-primary
+            +button-style($accent-color, color.adjust($accent-color, $lightness: -10%))
+            border: 2px solid $accent-color
+            padding: $spacing-sm $spacing-md
+            font-size: 0.95rem
+            font-weight: 600
+            letter-spacing: 0.5px
+            text-transform: uppercase
+            text-decoration: none
+            +transition(all)
+
+            &:hover
+                transform: translateY(-2px)
+                box-shadow: 0 4px 12px rgba($accent-color, 0.4)
+
+    .characters-grid
+        display: grid
+        grid-template-columns: repeat(auto-fill, minmax(300px, 1fr))
+        gap: $spacing-md
+
+        .empty-state
+            grid-column: 1 / -1
+            text-align: center
+            padding: $spacing-xl
+            background: $bg-light
+            border: 2px solid $accent-color
+            border-radius: $border-radius
+
+            p
+                +text-style(1.2rem, $text-color, $font-secondary)
+                margin-bottom: $spacing-md
+
+        .character-card
+            +card-style
+            cursor: pointer
+            +transition(all)
+            display: flex
+            flex-direction: column
+            overflow: hidden
+
+            &:hover
+                transform: translateY(-5px)
+                box-shadow: $shadow-lg
+
+            img
+                width: 100%
+                height: auto
+                object-fit: cover
+                border-radius: $border-radius
+                margin-bottom: $spacing-sm
+                flex-shrink: 0
+
+            .card-content
+                flex: 1
+                display: flex
+                flex-direction: column
+
+            h3
+                +text-style(1.2rem, $accent-color, $font-primary)
+                margin-bottom: $spacing-sm
+
+            .character-description
+                +text-style(0.9rem, $text-color, $font-secondary)
+                line-height: 1.5
+                margin-bottom: $spacing-sm
+
+            .stats
+                display: grid
+                grid-template-columns: repeat(2, 1fr)
+                gap: $spacing-xs
+                margin-bottom: $spacing-sm
+
+                .stat
+                    +text-style(0.9rem, $text-color, $font-secondary)
+
+                    .stat-label
+                        color: $accent-color
+
+.character-details
+    &__header
+        +flex-start
+        gap: $spacing-lg
+        margin-bottom: $spacing-lg
+        padding-bottom: $spacing-lg
+        border-bottom: 2px solid $accent-color
+
+    &__image
+        width: 150px
+        height: 150px
+        border-radius: $border-radius
+        border: 2px solid $accent-color
+        object-fit: cover
+
+    &__info
+        flex: 1
+
+        h2
+            +text-style(2rem, $accent-color, $font-primary)
+            margin-bottom: $spacing-md
+
+        p
+            +text-style(1rem, $text-color, $font-secondary)
+            margin-bottom: $spacing-xs
+
+    &__stats
+        margin-bottom: $spacing-lg
+
+        h3
+            +text-style(1.5rem, $accent-color, $font-primary)
+            margin-bottom: $spacing-md
+
+        .stats-grid
+            display: grid
+            grid-template-columns: repeat(3, 1fr)
+            gap: $spacing-md
+
+            .stat-item
+                background: $bg-dark
+                padding: $spacing-md
+                border-radius: $border-radius
+                text-align: center
+                border: 1px solid rgba($accent-color, 0.3)
+
+                .stat-label
+                    +text-style(0.9rem, $accent-color, $font-primary)
+                    margin-bottom: $spacing-xs
+
+                .stat-value
+                    +text-style(2rem, $text-color, $font-primary)
+                    margin-bottom: $spacing-xs
+
+                .stat-modifier
+                    +text-style(1rem, $accent-color, $font-secondary)
+
+    &__equipment,
+    &__background
+        margin-bottom: $spacing-lg
+
+        h3
+            +text-style(1.3rem, $accent-color, $font-primary)
+            margin-bottom: $spacing-md
+
+        ul
+            list-style: none
+            padding: 0
+
+            li
+                +text-style(1rem, $text-color, $font-secondary)
+                padding: $spacing-xs
+                background: $bg-dark
+                margin-bottom: $spacing-xs
+                border-radius: $border-radius
+
+        p
+            +text-style(1rem, $text-color, $font-secondary)
+            line-height: 1.6
+
+    +mobile
+        &__header
+            flex-direction: column
+            gap: $spacing-md
+
+        &__image
+            width: 100px
+            height: 100px
+
+        .stats-grid
+            grid-template-columns: repeat(2, 1fr)
+

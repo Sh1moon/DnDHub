@@ -1,0 +1,7 @@
+node_modules/
+*.log
+.DS_Store
+.vscode/
+.idea/
+# Не исключаем dist/, так как он нужен для GitHub Pages
+

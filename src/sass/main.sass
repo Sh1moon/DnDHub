@@ -1,0 +1,592 @@
+@use "sass:color"
+@use 'utils/variables' as *
+@use 'utils/mixins' as *
+@use 'components/header'
+@use 'components/navbar'
+@use 'components/slider'
+@use 'components/character-creator'
+@use 'components/character-list'
+@use 'components/room-manager'
+@use 'components/campaign-game'
+@use 'components/spellbook'
+@use 'components/aside'
+@use 'components/footer'
+@use 'components/auth-modal'
+@use 'components/new-auth-modal'
+@use 'components/entity-modal'
+@use 'components/notification'
+@use 'components/admin'
+@use 'components/confirm-modal'
+
+// Глобальные стили
+*
+    margin: 0
+    padding: 0
+    box-sizing: border-box
+
+// Глобальные стили для всех кнопок
+button,
+.btn
+    +button-style
+    border: 2px solid $accent-color
+    padding: $spacing-sm $spacing-md
+    font-size: 1rem
+    font-weight: 600
+    letter-spacing: 0.5px
+    text-transform: uppercase
+    +transition(all)
+    text-decoration: none
+    display: inline-block
+    cursor: pointer
+    font-family: $font-primary
+
+    &:hover
+        transform: translateY(-2px)
+        box-shadow: 0 4px 12px rgba($accent-color, 0.4)
+
+    &:active
+        transform: translateY(0)
+
+    &:disabled
+        opacity: 0.5
+        cursor: not-allowed
+        transform: none
+
+    &.btn-secondary
+        +button-style($bg-dark, color.adjust($bg-dark, $lightness: 10%))
+        border-color: color.adjust($bg-dark, $lightness: 10%)
+
+    &.btn-primary
+        +button-style($accent-color, color.adjust($accent-color, $lightness: -10%))
+        border-color: $accent-color
+
+    &.btn-danger
+        +button-style(#ff6b6b, color.adjust(#ff6b6b, $lightness: -10%))
+        border-color: #ff6b6b
+
+    &.btn-join
+        +button-style($accent-color, color.adjust($accent-color, $lightness: -10%))
+        border-color: $accent-color
+
+    &.btn-delete
+        +button-style(#ff6b6b, color.adjust(#ff6b6b, $lightness: -10%))
+        border-color: #ff6b6b
+
+// Стилизованная прокрутка для всех элементов
+*
+    scrollbar-width: thin
+    scrollbar-color: $accent-color $bg-dark
+
+*::-webkit-scrollbar
+    width: 12px
+    height: 12px
+
+*::-webkit-scrollbar-track
+    background: $bg-dark
+    border-radius: 6px
+
+*::-webkit-scrollbar-thumb
+    background: $accent-color
+    border-radius: 6px
+    border: 2px solid $bg-dark
+
+    &:hover
+        background: color.adjust($accent-color, $lightness: 10%)
+
+body
+    background: $bg-color
+    color: $text-color
+    font-family: $font-secondary
+    min-height: 100vh
+    line-height: 1.6
+
+// Подключение шрифтов
+@font-face
+    font-family: 'Slovic'
+    src: url('../fonts/Slovic/Slovic_Demo_VarGX.woff2') format('woff2'), url('../fonts/Slovic/Slovic_Demo_VarGX.woff') format('woff')
+    font-weight: normal
+    font-style: normal
+
+@font-face
+    font-family: 'PlayFair'
+    src: url('../fonts/PlayFair/PlayfairDisplay-Regular.woff2') format('woff2'), url('../fonts/PlayFair/PlayfairDisplay-Regular.woff') format('woff')
+    font-weight: normal
+    font-style: normal
+
+// Контейнеры
+.container
+    max-width: 1400px
+    margin: 0 auto
+    padding: $spacing-lg
+
+.content-section
+    margin-bottom: $spacing-xl
+    padding: $spacing-lg
+    background: $bg-light
+    border: 2px solid $accent-color
+    border-radius: $border-radius
+
+    .section-title
+        +text-style(2rem, $accent-color, $font-primary)
+        margin-bottom: $spacing-md
+
+    .section-text
+        +text-style(1.1rem, $text-color, $font-secondary)
+        line-height: 1.8
+
+// Секции
+.section
+    padding: $spacing-xl 0
+    min-height: calc(100vh - 200px)
+
+    &__title
+        +text-style(2.5rem, $accent-color, $font-primary)
+        text-align: center
+        margin-bottom: $spacing-xl
+
+// Формы
+.form
+    max-width: 600px
+    margin: 0 auto
+    background: $bg-light
+    border: 2px solid $accent-color
+    border-radius: $border-radius
+    padding: $spacing-xl
+
+    &__group
+        margin-bottom: $spacing-md
+
+        label
+            display: block
+            +text-style(1rem, $accent-color, $font-primary)
+            margin-bottom: $spacing-xs
+
+        input,
+        select,
+        textarea
+            +input-style
+            width: 100%
+
+        textarea
+            min-height: 120px
+            resize: vertical
+
+        .error-message
+            color: #ff6b6b
+            +text-style(0.8rem, #ff6b6b, $font-secondary)
+            margin-top: $spacing-xs
+            display: none
+
+            &.active
+                display: block
+
+    &__actions
+        +flex-between
+        margin-top: $spacing-lg
+
+        button,
+        .btn
+            +button-style
+            border: 2px solid $accent-color
+            padding: $spacing-sm $spacing-md
+            font-size: 1rem
+            font-weight: 600
+            letter-spacing: 0.5px
+            text-transform: uppercase
+            +transition(all)
+            text-decoration: none
+            display: inline-block
+            cursor: pointer
+
+            &:hover
+                transform: translateY(-2px)
+                box-shadow: 0 4px 12px rgba($accent-color, 0.4)
+
+            &:active
+                transform: translateY(0)
+
+            &.btn-secondary
+                +button-style($bg-dark, color.adjust($bg-dark, $lightness: 10%))
+                border-color: color.adjust($bg-dark, $lightness: 10%)
+
+            &.btn-primary
+                +button-style($accent-color, color.adjust($accent-color, $lightness: -10%))
+                border-color: $accent-color
+
+            &.btn-danger
+                +button-style(#ff6b6b, color.adjust(#ff6b6b, $lightness: -10%))
+                border-color: #ff6b6b
+
+            &.btn-join
+                +button-style($accent-color, color.adjust($accent-color, $lightness: -10%))
+                border-color: $accent-color
+
+            &.btn-delete
+                +button-style(#ff6b6b, color.adjust(#ff6b6b, $lightness: -10%))
+                border-color: #ff6b6b
+
+// Модальные окна
+.modal
+    display: none 
+    position: fixed
+    top: 0
+    left: 0
+    width: 100%
+    height: 100%
+    background: rgba(0, 0, 0, 0.7)
+    z-index: 1000
+    +flex-center
+    pointer-events: none
+
+    &.active
+        display: flex
+        pointer-events: auto
+
+    &__content
+        background: $bg-light
+        border: 2px solid $accent-color
+        border-radius: $border-radius
+        padding: $spacing-xl
+        max-width: 800px
+        width: 90%
+        max-height: 85vh
+        position: relative
+        pointer-events: auto
+        overflow-y: auto
+        overflow-x: hidden
+        display: flex
+        flex-direction: column
+
+        &.create-room-modal
+            max-width: 500px
+            width: 90%
+            max-height: 70vh
+            overflow-y: auto
+            display: flex
+            flex-direction: column
+
+        // Декоративные углы
+        &::before
+            content: ''
+            position: absolute
+            top: 0
+            left: 0
+            width: 60px
+            height: 60px
+            background-image: url('../img/corner.svg')
+            background-size: contain
+            background-repeat: no-repeat
+            background-position: top left
+            z-index: 1
+            pointer-events: none
+
+        &::after
+            content: ''
+            position: absolute
+            bottom: 0
+            right: 0
+            width: 60px
+            height: 60px
+            background-image: url('../img/corner.svg')
+            background-size: contain
+            background-repeat: no-repeat
+            background-position: bottom right
+            transform: rotate(180deg)
+            z-index: 1
+            pointer-events: none
+
+        // Стили для модальных окон с деталями сущностей
+        .item-details-layout
+            display: flex
+            gap: $spacing-lg
+            align-items: flex-start
+
+            .item-details-image
+                flex-shrink: 0
+                width: 400px
+                max-width: 100%
+                display: flex
+                align-items: center
+                justify-content: center
+
+                img
+                    max-width: 100%
+                    max-height: min(500px, 70vh)
+                    width: auto
+                    height: auto
+                    border-radius: $border-radius
+                    object-fit: contain
+
+            .item-details-content
+                flex: 1
+                +text-style(1rem, $text-color, $font-secondary)
+
+                p
+                    margin-bottom: $spacing-sm
+                    line-height: 1.6
+
+                    strong
+                        color: $accent-color
+                        font-family: $font-primary
+
+    &__close
+        position: absolute
+        top: $spacing-sm
+        right: $spacing-sm
+        background: none
+        border: none
+        color: $accent-color
+        font-size: 2rem
+        cursor: pointer
+        +transition(all)
+        z-index: 10
+        width: 32px
+        height: 32px
+        +flex-center
+        padding: 0
+        line-height: 1
+
+        &:hover
+            transform: scale(1.2) rotate(90deg)
+            color: color.adjust($accent-color, $lightness: 10%)
+
+// Уведомления
+.notification
+    position: fixed
+    z-index: 5000
+    top: $spacing-lg
+    right: $spacing-lg
+    background: linear-gradient(135deg, $bg-light 0%, color.adjust($bg-light, $lightness: -3%) 100%)
+    border: 3px solid $accent-color
+    border-radius: $border-radius
+    padding: 0
+    min-width: 320px
+    max-width: 400px
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5)
+    +transition(all, 0.3s)
+    transform: translateX(450px)
+    opacity: 0
+    overflow: hidden
+    display: none
+    pointer-events: none
+
+    &.active
+        display: block
+        transform: translateX(0)
+        opacity: 1
+        pointer-events: auto
+
+    &__content
+        display: flex
+        align-items: flex-start
+        gap: $spacing-md
+        padding: $spacing-md
+
+    &__icon
+        flex-shrink: 0
+        width: 32px
+        height: 32px
+        border-radius: 50%
+        +flex-center
+        font-size: 1.2rem
+        font-weight: 700
+        color: $text-color
+
+    &.success
+        border-color: #4caf50
+        .notification__icon
+            background: rgba(#4caf50, 0.2)
+            color: #4caf50
+
+    &.error
+        border-color: #f44336
+        .notification__icon
+            background: rgba(#f44336, 0.2)
+            color: #f44336
+
+    &.warning
+        border-color: #ff9800
+        .notification__icon
+            background: rgba(#ff9800, 0.2)
+            color: #ff9800
+
+    &.info
+        border-color: #2196f3
+        .notification__icon
+            background: rgba(#2196f3, 0.2)
+            color: #2196f3
+
+    &__text
+        flex: 1
+
+    &__title
+        +text-style(1rem, $accent-color, $font-primary)
+        margin-bottom: $spacing-xs
+        font-weight: 700
+        text-transform: uppercase
+        letter-spacing: 0.5px
+
+    &__message
+        +text-style(0.9rem, $text-color, $font-secondary)
+        line-height: 1.5
+
+    &__close
+        flex-shrink: 0
+        background: rgba($accent-color, 0.1)
+        border: 2px solid rgba($accent-color, 0.3)
+        border-radius: 50%
+        color: $accent-color
+        font-size: 1.5rem
+        cursor: pointer
+        +transition(all)
+        width: 28px
+        height: 28px
+        +flex-center
+        padding: 0
+        line-height: 1
+
+        &:hover
+            background: rgba($accent-color, 0.2)
+            border-color: $accent-color
+            transform: scale(1.1) rotate(90deg)
+
+    &.success
+        border-color: #51cf66
+
+    &.error
+        border-color: #ff6b6b
+
+    &.warning
+        border-color: #ffd43b
+
+// Загрузка
+.loading
+    +flex-center
+    min-height: 400px
+
+    &__spinner
+        width: 50px
+        height: 50px
+        border: 4px solid rgba($accent-color, 0.3)
+        border-top-color: $accent-color
+        border-radius: 50%
+        animation: spin 1s linear infinite
+
+@keyframes spin
+    to
+        transform: rotate(360deg)
+
+// Админ панель
+.admin-panel
+    max-width: 1600px
+    margin: $spacing-lg auto
+    padding: $spacing-lg
+
+    &__header
+        +flex-between
+        margin-bottom: $spacing-xl
+
+        h2
+            +text-style(2.5rem, $accent-color, $font-primary)
+
+    &__tabs
+        +flex-start
+        gap: $spacing-sm
+        margin-bottom: $spacing-lg
+        border-bottom: 2px solid $accent-color
+
+        .tab
+            padding: $spacing-sm $spacing-md
+            +text-style(1.1rem, $text-color, $font-primary)
+            cursor: pointer
+            border-bottom: 3px solid transparent
+            +transition(all)
+
+            &:hover
+                color: $accent-color
+
+            &.active
+                color: $accent-color
+                border-color: $accent-color
+
+    &__content
+        .data-table
+            width: 100%
+            border-collapse: collapse
+            background: $bg-light
+            border-radius: $border-radius
+            overflow: hidden
+
+            th,
+            td
+                padding: $spacing-sm
+                text-align: left
+                border-bottom: 1px solid rgba($accent-color, 0.2)
+
+            th
+                +text-style(1rem, $accent-color, $font-primary)
+                background: $bg-dark
+
+            td
+                +text-style(0.9rem, $text-color, $font-secondary)
+
+            .actions
+                +flex-center
+                gap: $spacing-xs
+
+                button
+                    +button-style
+                    padding: $spacing-xs $spacing-sm
+                    font-size: 0.8rem
+
+        .data-stats
+            .stats-grid
+                display: grid
+                grid-template-columns: repeat(auto-fill, minmax(200px, 1fr))
+                gap: $spacing-md
+                margin-bottom: $spacing-lg
+
+                .stat-card
+                    +card-style
+                    text-align: center
+                    padding: $spacing-lg
+
+                    .stat-value
+                        +text-style(3rem, $accent-color, $font-primary)
+                        margin-bottom: $spacing-xs
+
+                    .stat-label
+                        +text-style(1rem, $text-color, $font-secondary)
+
+            .data-actions
+                +flex-center
+                gap: $spacing-md
+
+                button
+                    +button-style
+
+                    &.btn-danger
+                        +button-style(#ff6b6b, color.adjust(#ff6b6b, $lightness: -10%))
+
+        .data-table-container
+            overflow-x: auto
+
+// Responsive
++mobile
+    .container
+        padding: $spacing-md
+
+    .section
+        padding: $spacing-lg 0
+
+        &__title
+            font-size: 1.8rem
+
+    .form
+        padding: $spacing-md
+
+    .notification
+        right: $spacing-sm
+        left: $spacing-sm
+        min-width: auto
+

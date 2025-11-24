@@ -1,0 +1,83 @@
+@use '../utils/variables' as *
+@use '../utils/mixins' as *
+
+.aside
+    position: relative
+    display: flex
+    flex-direction: column
+    align-items: center
+    justify-content: start
+    background-color: $bg-color
+    width: $sidebar-width
+    border-right: solid $accent-color 5px
+    gap: 106px
+    +transition(all, 1s)
+    flex-shrink: 0
+    font-family: $font-primary
+    min-height: 100vh
+
+    &:hover
+        width: $sidebar-expanded-width
+        justify-content: start
+
+        .hidden
+            display: block !important
+            opacity: 1
+            +transition(all, 1s)
+
+    &__back
+        width: 148px
+        padding-top: 20px
+        cursor: pointer
+        +transition(all, 1s)
+        display: flex
+        justify-content: center
+        align-items: center
+
+        &:hover
+            transform: scale(1.2)
+
+        img
+            width: 100%
+            height: auto
+
+    &__list
+        display: flex
+        flex-direction: column
+        gap: 67px
+        +transition(all, 1s)
+        list-style: none
+        margin: 0
+        padding: 0
+
+    &__items
+        display: flex
+        align-items: center
+        justify-content: center
+        height: 127px
+        cursor: pointer
+        +transition(all, 1s)
+        gap: 20px
+        border-radius: 12px
+        padding: $spacing-sm
+
+        &:hover
+            transform: scale(1.1)
+
+        & > p
+            color: $accent-color
+            font-family: $font-primary
+            +text-style(1rem, $accent-color, $font-primary)
+
+        img
+            width: 94px
+            height: auto
+
+    &__active
+        background-color: $text-color
+
+    .hidden
+        display: none
+        opacity: 0
+        +transition(all, 1s)
+

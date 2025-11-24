@@ -1,0 +1,111 @@
+@use '../utils/variables' as *
+@use '../utils/mixins' as *
+
+.header
+    background: $bg-dark
+    border-bottom: 2px solid $accent-color
+    padding: $spacing-md $spacing-lg
+    +flex-between
+    position: sticky
+    top: 0
+    z-index: 100
+    box-shadow: $shadow
+
+    &__logo
+        +flex-center
+        gap: $spacing-sm
+        
+        img
+            height: 50px
+            width: auto
+
+    &__nav
+        +flex-center
+        gap: $spacing-lg
+
+        &-link
+            +text-style(1.1rem, $text-color, $font-primary)
+            text-decoration: none
+            padding: $spacing-xs $spacing-sm
+            border-radius: $border-radius
+            +transition(all)
+            position: relative
+
+            &:hover
+                color: $accent-color
+                background: rgba($accent-color, 0.1)
+
+            &.active
+                color: $accent-color
+                border-bottom: 2px solid $accent-color
+
+    &__search
+        position: relative
+        max-width: 300px
+        width: 100%
+
+        input
+            +input-style
+            width: 100%
+            padding-right: 40px
+
+        &-icon
+            position: absolute
+            right: $spacing-sm
+            top: 50%
+            transform: translateY(-50%)
+            color: $accent-color
+            cursor: pointer
+
+    &__user
+        +flex-center
+        gap: $spacing-sm
+        position: relative
+
+        &-avatar
+            width: 40px
+            height: 40px
+            border-radius: 50%
+            border: 2px solid $accent-color
+            cursor: pointer
+            +transition(all)
+
+            &:hover
+                transform: scale(1.1)
+
+        &-menu
+            position: absolute
+            top: calc(100% + $spacing-sm)
+            right: 0
+            background: $bg-light
+            border: 2px solid $accent-color
+            border-radius: $border-radius
+            padding: $spacing-sm
+            min-width: 200px
+            display: none
+            box-shadow: $shadow-lg
+
+            &.active
+                display: block
+
+            &-item
+                padding: $spacing-sm
+                cursor: pointer
+                border-radius: $border-radius
+                +transition(all)
+                +text-style(0.9rem, $text-color, $font-secondary)
+
+                &:hover
+                    background: rgba($accent-color, 0.2)
+
+    +mobile
+        flex-direction: column
+        gap: $spacing-md
+
+        &__nav
+            flex-wrap: wrap
+            gap: $spacing-sm
+
+        &__search
+            max-width: 100%
+

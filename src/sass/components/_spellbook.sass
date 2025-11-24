@@ -1,0 +1,175 @@
+@use '../utils/variables' as *
+@use '../utils/mixins' as *
+
+.spellbook
+    max-width: 1400px
+    margin: $spacing-lg auto
+    padding: $spacing-lg
+
+    &__header
+        +flex-between
+        margin-bottom: $spacing-lg
+        flex-wrap: wrap
+        gap: $spacing-md
+
+        h2
+            +text-style(2rem, $accent-color, $font-primary)
+
+        .search-container
+            position: relative
+            max-width: 500px
+            width: 100%
+
+            input
+                +input-style
+                width: 100%
+                padding-right: 50px
+
+            .search-suggestions
+                position: absolute
+                top: calc(100% + $spacing-xs)
+                left: 0
+                right: 0
+                background: $bg-light
+                border: 2px solid $accent-color
+                border-radius: $border-radius
+                max-height: 300px
+                overflow-y: auto
+                z-index: 10
+                display: none
+
+                &.active
+                    display: block
+
+                .suggestion-item
+                    padding: $spacing-sm
+                    cursor: pointer
+                    +transition(all)
+                    border-bottom: 1px solid rgba($accent-color, 0.2)
+
+                    &:hover
+                        background: rgba($accent-color, 0.2)
+
+                    &:last-child
+                        border-bottom: none
+
+                    .suggestion-name
+                        +text-style(1rem, $accent-color, $font-primary)
+                        margin-bottom: $spacing-xs
+
+                    .suggestion-info
+                        +text-style(0.8rem, $text-color, $font-secondary)
+
+        .filters
+            +flex-center
+            gap: $spacing-sm
+            flex-wrap: wrap
+
+            select
+                +input-style
+                min-width: 150px
+
+    &__tabs
+        +flex-start
+        gap: $spacing-sm
+        margin-bottom: $spacing-lg
+        border-bottom: 2px solid $accent-color
+
+        .spellbook-tab
+            padding: $spacing-sm $spacing-md
+            +text-style(1.1rem, $text-color, $font-primary)
+            cursor: pointer
+            border-bottom: 3px solid transparent
+            +transition(all)
+            background: none
+            border-top: none
+            border-left: none
+            border-right: none
+
+            &:hover
+                color: $accent-color
+
+            &.active
+                color: $accent-color
+                border-color: $accent-color
+
+    &__content
+        margin-top: $spacing-lg
+
+
+    &__monsters-grid,
+    &__items-grid
+        display: grid
+        grid-template-columns: repeat(auto-fill, minmax(280px, 1fr))
+        gap: $spacing-md
+
+        .monster-card,
+        .item-card,
+        .race-card,
+        .class-card,
+        .spell-card
+            +card-style
+            cursor: pointer
+            +transition(all)
+            display: flex
+            flex-direction: column
+            overflow: hidden
+
+            &:hover
+                transform: translateY(-5px)
+                box-shadow: $shadow-lg
+
+            img
+                width: 100%
+                height: auto
+                object-fit: cover
+                border-radius: $border-radius
+                margin-bottom: $spacing-sm
+                flex-shrink: 0
+
+            .card-content
+                flex: 1
+                display: flex
+                flex-direction: column
+
+            h3
+                +text-style(1.2rem, $accent-color, $font-primary)
+                margin-bottom: $spacing-sm
+
+            .spell-description,
+            .race-description,
+            .character-description
+                +text-style(0.9rem, $text-color, $font-secondary)
+                line-height: 1.5
+                margin-bottom: $spacing-sm
+
+            .stats
+                display: grid
+                grid-template-columns: repeat(2, 1fr)
+                gap: $spacing-xs
+                margin-bottom: $spacing-sm
+
+                .stat
+                    +text-style(0.9rem, $text-color, $font-secondary)
+
+                    .stat-label
+                        color: $accent-color
+
+            .bonuses
+                margin-top: auto
+                padding-top: $spacing-sm
+                +text-style(0.85rem, $accent-color, $font-secondary)
+
+    +mobile
+        padding: $spacing-md
+
+        &__monsters-grid,
+        &__items-grid
+            grid-template-columns: 1fr
+
+        .item-details-layout
+            flex-direction: column
+
+            .item-details-image
+                width: 100%
+

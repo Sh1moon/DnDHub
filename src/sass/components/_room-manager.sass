@@ -1,0 +1,225 @@
+@use "sass:color"
+@use '../utils/variables' as *
+@use '../utils/mixins' as *
+
+.room-manager
+    max-width: 1400px
+    margin: $spacing-lg auto
+    padding: $spacing-lg
+
+    &__header
+        +flex-between
+        margin-bottom: $spacing-lg
+
+        h2
+            +text-style(2rem, $accent-color, $font-primary)
+
+        button,
+        .btn
+            +button-style
+            border: 2px solid $accent-color
+            padding: $spacing-sm $spacing-md
+            font-size: 1rem
+            font-weight: 600
+            letter-spacing: 0.5px
+            text-transform: uppercase
+            +transition(all)
+
+            &:hover
+                transform: translateY(-2px)
+                box-shadow: 0 4px 12px rgba($accent-color, 0.4)
+
+            &:active
+                transform: translateY(0)
+
+            &.btn-primary
+                +button-style($accent-color, color.adjust($accent-color, $lightness: -10%))
+                border-color: $accent-color
+
+            &.btn-secondary
+                +button-style($bg-dark, color.adjust($bg-dark, $lightness: 10%))
+                border-color: color.adjust($bg-dark, $lightness: 10%)
+
+    .rooms-list
+        display: grid
+        grid-template-columns: repeat(auto-fill, minmax(300px, 1fr))
+        gap: $spacing-lg
+
+        .room-card
+            +card-style
+            cursor: pointer
+            +transition(all)
+            padding: $spacing-lg
+            display: flex
+            flex-direction: column
+            gap: $spacing-md
+
+            &:hover
+                transform: translateY(-5px)
+                box-shadow: $shadow-lg
+                border-color: color.adjust($accent-color, $lightness: 10%)
+
+            .room-card-header
+                +flex-between
+                align-items: flex-start
+
+                h3
+                    +text-style(1.5rem, $accent-color, $font-primary)
+                    margin: 0
+                    flex: 1
+
+                .room-status
+                    +text-style(0.85rem, $text-color, $font-secondary)
+                    padding: $spacing-xs $spacing-sm
+                    background: rgba($accent-color, 0.2)
+                    border-radius: $border-radius
+
+            .room-description
+                +text-style(0.95rem, $text-color, $font-secondary)
+                line-height: 1.6
+                flex: 1
+
+            .room-info
+                display: flex
+                gap: $spacing-md
+                flex-wrap: wrap
+                +text-style(0.9rem, $text-color, $font-secondary)
+
+                .info-item
+                    display: flex
+                    align-items: center
+                    gap: $spacing-xs
+
+                    strong
+                        color: $accent-color
+                        font-family: $font-primary
+
+            .room-card-actions
+                +flex-start
+                gap: $spacing-sm
+                margin-top: $spacing-sm
+
+                button,
+                .btn
+                    +button-style
+                    border: 2px solid $accent-color
+                    padding: $spacing-xs $spacing-sm
+                    font-size: 0.9rem
+
+// Стили для модального окна создания комнаты
+.create-room-modal
+    position: relative
+    max-width: 500px
+    width: 90%
+    max-height: 70vh
+    overflow-y: auto
+    padding: $spacing-lg
+
+    .create-room-header
+        margin-bottom: $spacing-lg
+        padding-bottom: $spacing-md
+        border-bottom: 2px solid $accent-color
+
+        h2
+            +text-style(1.5rem, $accent-color, $font-primary)
+            margin: 0
+            font-weight: 600
+
+    .create-room-form
+        display: flex
+        flex-direction: column
+        gap: $spacing-md
+
+        .form-group
+            display: flex
+            flex-direction: column
+            gap: $spacing-xs
+
+            .form-label
+                +text-style(0.9rem, $accent-color, $font-primary)
+                font-weight: 600
+                letter-spacing: 0.5px
+
+            .form-input
+                +input-style
+                width: 100%
+                padding: $spacing-sm $spacing-md
+                font-size: 0.95rem
+                background: $bg-dark
+                border: 2px solid rgba($accent-color, 0.3)
+                border-radius: $border-radius
+                +transition(all)
+
+                &:focus
+                    border-color: $accent-color
+                    background: $bg-light
+                    outline: none
+                    box-shadow: 0 0 0 3px rgba($accent-color, 0.15)
+
+                &::placeholder
+                    color: rgba($text-color, 0.5)
+
+            .form-textarea
+                min-height: 80px
+                resize: vertical
+                font-family: $font-secondary
+
+            &.form-group-checkbox
+                flex-direction: row
+                align-items: center
+                gap: $spacing-sm
+
+                .checkbox-label
+                    display: flex
+                    align-items: center
+                    gap: $spacing-sm
+                    cursor: pointer
+                    +text-style(0.9rem, $text-color, $font-secondary)
+
+                    .checkbox-input
+                        width: 18px
+                        height: 18px
+                        cursor: pointer
+                        accent-color: $accent-color
+
+                    .checkbox-text
+                        user-select: none
+
+        .form-row
+            display: grid
+            grid-template-columns: 1fr 1fr
+            gap: $spacing-md
+
+        .form-actions
+            display: flex
+            gap: $spacing-md
+            margin-top: $spacing-md
+            padding-top: $spacing-md
+            border-top: 2px solid rgba($accent-color, 0.2)
+
+            .btn
+                flex: 1
+                padding: $spacing-sm $spacing-md
+                font-size: 0.95rem
+                font-weight: 600
+
+                &.btn-secondary
+                    +button-style($bg-dark, color.adjust($bg-dark, $lightness: 10%))
+                    border-color: color.adjust($bg-dark, $lightness: 10%)
+
+                &.btn-primary
+                    +button-style($accent-color, color.adjust($accent-color, $lightness: -10%))
+                    border-color: $accent-color
+
+    +mobile
+        padding: $spacing-md
+        max-height: 75vh
+
+        .create-room-form
+            gap: $spacing-sm
+
+            .form-row
+                grid-template-columns: 1fr
+
+            .form-actions
+                flex-direction: column

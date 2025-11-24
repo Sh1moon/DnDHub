@@ -1,0 +1,297 @@
+@use "sass:color"
+@use '../utils/variables' as *
+@use '../utils/mixins' as *
+
+.auth-modal-overlay
+    display: none !important
+    position: fixed
+    top: 0
+    left: 0
+    width: 100%
+    height: 100%
+    background: rgba(0, 0, 0, 0.85)
+    z-index: 3000
+    +flex-center
+    backdrop-filter: blur(10px)
+    opacity: 0
+    +transition(all, 0.3s)
+
+    &.active
+        display: flex !important
+        opacity: 1
+
+    .auth-modal
+        background: $bg-light
+        border: 3px solid $accent-color
+        border-radius: $border-radius * 1.5
+        padding: 0
+        max-width: 420px
+        width: 90%
+        max-height: 70vh
+        position: relative
+        box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5)
+        pointer-events: auto
+        overflow: hidden
+        animation: slideIn 0.3s ease-out
+        display: flex
+        flex-direction: column
+
+        @keyframes slideIn
+            from
+                opacity: 0
+                transform: translateY(-30px) scale(0.95)
+            to
+                opacity: 1
+                transform: translateY(0) scale(1)
+
+        &__close
+            position: absolute
+            top: $spacing-sm
+            right: $spacing-sm
+            background: rgba($accent-color, 0.1)
+            border: 2px solid rgba($accent-color, 0.3)
+            border-radius: 50%
+            color: $accent-color
+            font-size: 1.5rem
+            cursor: pointer
+            +transition(all)
+            line-height: 1
+            padding: 0
+            width: 32px
+            height: 32px
+            +flex-center
+            z-index: 10
+
+            &:hover
+                transform: scale(1.1) rotate(90deg)
+                background: rgba($accent-color, 0.2)
+                border-color: $accent-color
+
+        &__header
+            background: linear-gradient(135deg, $accent-color 0%, color.adjust($accent-color, $lightness: -10%) 100%)
+            padding: $spacing-lg $spacing-xl
+            text-align: center
+            position: relative
+            flex-shrink: 0
+
+            .auth-modal__title
+                +text-style(1.6rem, $text-color, $font-primary)
+                margin: 0 0 $spacing-xs
+                text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3)
+                letter-spacing: 1px
+                font-weight: 700
+
+            .auth-modal__subtitle
+                +text-style(0.9rem, rgba($text-color, 0.9), $font-secondary)
+                margin: 0
+                font-style: italic
+
+        &__body
+            padding: $spacing-xl $spacing-lg
+            overflow-y: auto
+            flex: 1
+            min-height: 0
+
+            .auth-form
+                display: flex
+                flex-direction: column
+                gap: $spacing-md
+
+                .form-group
+                    display: flex
+                    flex-direction: column
+                    gap: $spacing-xs
+
+                    .form-label
+                        +text-style(0.85rem, $accent-color, $font-primary)
+                        font-weight: 600
+                        letter-spacing: 0.5px
+                        text-transform: uppercase
+                        font-size: 0.8rem
+
+                    .form-input
+                        +input-style
+                        width: 100%
+                        padding: $spacing-sm $spacing-md
+                        font-size: 0.95rem
+                        +transition(all)
+                        background: $bg-dark
+                        border-width: 2px
+                        border-color: rgba($accent-color, 0.3)
+
+                        &:focus
+                            border-color: $accent-color
+                            box-shadow: 0 0 0 3px rgba($accent-color, 0.2)
+                            background: $bg-light
+                            transform: translateY(-1px)
+
+                        &::placeholder
+                            color: rgba($text-color, 0.5)
+                            font-style: italic
+
+                    .password-input-wrapper
+                        position: relative
+                        display: flex
+                        align-items: center
+
+                        .form-input
+                            padding-right: 45px
+
+                        .password-toggle
+                            position: absolute
+                            right: $spacing-sm
+                            background: none
+                            border: none
+                            color: $accent-color
+                            cursor: pointer
+                            font-size: 1.2rem
+                            padding: $spacing-xs
+                            +transition(all)
+                            z-index: 2
+                            width: 32px
+                            height: 32px
+                            +flex-center
+
+                            &:hover
+                                transform: scale(1.1)
+                                color: color.adjust($accent-color, $lightness: 10%)
+
+                    .form-error
+                        +text-style(0.8rem, #f44336, $font-secondary)
+                        min-height: 18px
+                        display: none
+                        margin-top: $spacing-xs
+
+                        &.active
+                            display: block
+
+                    .forgot-password-link
+                        +text-style(0.8rem, $accent-color, $font-secondary)
+                        text-decoration: none
+                        margin-top: $spacing-xs
+                        +transition(all)
+                        align-self: flex-start
+
+                        &:hover
+                            color: color.adjust($accent-color, $lightness: 10%)
+                            text-decoration: underline
+
+                    &.form-group-checkbox
+                        flex-direction: row
+                        align-items: center
+                        gap: $spacing-sm
+
+                        .checkbox-label
+                            display: flex
+                            align-items: center
+                            gap: $spacing-sm
+                            cursor: pointer
+                            +text-style(0.85rem, $text-color, $font-secondary)
+
+                            .checkbox-input
+                                width: 18px
+                                height: 18px
+                                cursor: pointer
+                                accent-color: $accent-color
+
+                            .checkbox-text
+                                user-select: none
+
+                .auth-submit-btn
+                    +button-style($accent-color, color.adjust($accent-color, $lightness: -10%))
+                    width: 100%
+                    padding: $spacing-sm $spacing-md
+                    font-size: 1rem
+                    font-weight: 600
+                    letter-spacing: 1px
+                    text-transform: uppercase
+                    border: 2px solid $accent-color
+                    margin-top: $spacing-sm
+                    +transition(all)
+                    position: relative
+                    overflow: hidden
+
+                    &::before
+                        content: ''
+                        position: absolute
+                        top: 50%
+                        left: 50%
+                        width: 0
+                        height: 0
+                        border-radius: 50%
+                        background: rgba(255, 255, 255, 0.3)
+                        transform: translate(-50%, -50%)
+                        +transition(all)
+
+                    &:hover
+                        transform: translateY(-2px)
+                        box-shadow: 0 6px 15px rgba($accent-color, 0.4)
+
+                        &::before
+                            width: 300px
+                            height: 300px
+
+                    &:active
+                        transform: translateY(0)
+
+                    .btn-text
+                        position: relative
+                        z-index: 1
+
+                    .btn-loader
+                        position: relative
+                        z-index: 1
+                        display: inline-block
+                        animation: spin 1s linear infinite
+
+        &__footer
+            padding: $spacing-md $spacing-lg
+            border-top: 2px solid rgba($accent-color, 0.2)
+            background: rgba($accent-color, 0.03)
+            text-align: center
+            flex-shrink: 0
+
+            .auth-switch
+                +text-style(0.85rem, $text-color, $font-secondary)
+
+                .auth-link
+                    color: $accent-color
+                    cursor: pointer
+                    text-decoration: none
+                    font-weight: 700
+                    +transition(all)
+                    padding: $spacing-xs $spacing-sm
+                    border-radius: $border-radius
+                    display: inline-block
+                    margin-left: $spacing-xs
+                    text-transform: uppercase
+                    letter-spacing: 1px
+                    border-bottom: 2px solid transparent
+
+                    &:hover
+                        color: color.adjust($accent-color, $lightness: 10%)
+                        border-bottom-color: $accent-color
+                        transform: translateY(-1px)
+
+@keyframes spin
+    0%
+        transform: rotate(0deg)
+    100%
+        transform: rotate(360deg)
+
++mobile
+    .auth-modal-overlay
+        .auth-modal
+            width: 95%
+            max-width: 95%
+            border-radius: $border-radius
+            max-height: 75vh
+
+            &__header
+                padding: $spacing-md $spacing-lg
+
+                .auth-modal__title
+                    font-size: 1.3rem
+
+            &__body
+                padding: $spacing-lg

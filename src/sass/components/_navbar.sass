@@ -1,0 +1,129 @@
+@use '../utils/variables' as *
+@use '../utils/mixins' as *
+
+.navbar
+    background: $bg-dark
+    border-bottom: 2px solid $accent-color
+    padding: $spacing-md $spacing-lg
+    +flex-between
+    position: sticky
+    top: 0
+    z-index: 100
+    box-shadow: $shadow
+
+    .logo
+        height: 50px
+        width: auto
+        cursor: pointer
+
+    .nav-links
+        +flex-center
+        gap: $spacing-lg
+        list-style: none
+        margin: 0
+        padding: 0
+
+        .nav-link
+            +text-style(1.1rem, $text-color, $font-primary)
+            text-decoration: none
+            padding: $spacing-xs $spacing-sm
+            border-radius: $border-radius
+            +transition(all)
+            position: relative
+
+            &:hover
+                color: $accent-color
+                background: rgba($accent-color, 0.1)
+
+            &.active
+                color: $accent-color
+                border-bottom: 2px solid $accent-color
+
+            &.protected-link
+                cursor: pointer
+
+    .user-section
+        +flex-center
+        gap: $spacing-sm
+        position: relative
+
+        .user-name
+            +text-style(1rem, $text-color, $font-primary)
+            display: none
+
+            @media (min-width: $tablet)
+                display: block
+
+        .user-icon
+
+            cursor: pointer
+            +transition(all)
+            padding: 8px
+
+            &:hover
+                transform: scale(1.1)
+
+        .user-menu
+            position: absolute
+            top: calc(100% + $spacing-sm)
+            right: 0
+            background: $bg-light
+            border: 2px solid $accent-color
+            border-radius: $border-radius
+            padding: $spacing-md
+            min-width: 250px
+            display: none
+            box-shadow: $shadow-lg
+            z-index: 1000
+            opacity: 0
+            transform: translateY(-10px)
+            +transition(all, 0.2s)
+
+            &.active
+                display: block
+                opacity: 1
+                transform: translateY(0)
+
+            &__info
+                padding-bottom: $spacing-sm
+                margin-bottom: $spacing-sm
+                border-bottom: 1px solid rgba($accent-color, 0.3)
+
+            &__name
+                +text-style(1.1rem, $accent-color, $font-primary)
+                margin-bottom: $spacing-xs
+
+            &__email
+                +text-style(0.9rem, $text-color, $font-secondary)
+
+            &__item
+                width: 100%
+                padding: $spacing-sm $spacing-md
+                margin-top: $spacing-xs
+                background: rgba($bg-dark, 0.5)
+                border: 1px solid rgba($accent-color, 0.3)
+                +text-style(1rem, $text-color, $font-secondary)
+                text-align: left
+                cursor: pointer
+                border-radius: $border-radius
+                +transition(all)
+                font-family: $font-primary
+                font-weight: 500
+
+                &:hover
+                    background: rgba($accent-color, 0.2)
+                    border-color: $accent-color
+                    transform: translateX(5px)
+                    box-shadow: 0 2px 8px rgba($accent-color, 0.3)
+
+                &:active
+                    transform: translateX(3px)
+
+    +mobile
+        flex-direction: column
+        gap: $spacing-md
+
+        .nav-links
+            flex-wrap: wrap
+            gap: $spacing-sm
+

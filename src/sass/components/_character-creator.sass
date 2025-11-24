@@ -1,0 +1,295 @@
+@use "sass:color"
+@use '../utils/variables' as *
+@use '../utils/mixins' as *
+
+.character-creator
+    background: $bg-light
+    border: 2px solid $accent-color
+    border-radius: $border-radius
+    color: $text-color
+    padding: $spacing-lg
+    margin: $spacing-lg auto
+    max-width: 1200px
+    overflow: visible
+
+    .creation-steps
+        display: flex
+        justify-content: space-between
+        margin-bottom: $spacing-lg
+        border-bottom: 2px solid $accent-color
+        padding-bottom: $spacing-md
+
+        .step
+            padding: $spacing-sm $spacing-md
+            border-bottom: 3px solid transparent
+            font-family: $font-primary
+            +text-style(1.1rem, $text-color, $font-primary)
+            cursor: pointer
+            +transition(all)
+            flex: 1
+            text-align: center
+
+            &:hover
+                color: $accent-color
+
+            &.active
+                border-color: $accent-color
+                color: $accent-color
+
+    #characterCreatorContent
+        min-height: 300px
+        overflow: visible
+        margin-bottom: $spacing-lg
+
+    .race-selection,
+    .class-selection
+        display: grid
+        grid-template-columns: repeat(auto-fill, minmax(280px, 1fr))
+        gap: $spacing-md
+        margin-bottom: $spacing-md
+
+        .race-card,
+        .class-card
+            +card-style
+            cursor: pointer
+            +transition(all)
+            display: flex
+            flex-direction: column
+            overflow: hidden
+
+            &:hover
+                transform: translateY(-5px)
+                box-shadow: $shadow-lg
+
+            &.selected
+                border-color: $accent-color
+                background: rgba($accent-color, 0.1)
+                box-shadow: 0 0 0 3px rgba($accent-color, 0.2)
+
+            img
+                width: 100%
+                height: auto
+                object-fit: cover
+                border-radius: $border-radius
+                margin-bottom: $spacing-sm
+                flex-shrink: 0
+
+            .card-content
+                flex: 1
+                display: flex
+                flex-direction: column
+
+            h3
+                +text-style(1.2rem, $accent-color, $font-primary)
+                margin-bottom: $spacing-sm
+
+            .race-description,
+            .class-description
+                +text-style(0.9rem, $text-color, $font-secondary)
+                line-height: 1.5
+                margin-bottom: $spacing-sm
+
+            .stats
+                display: grid
+                grid-template-columns: repeat(2, 1fr)
+                gap: $spacing-xs
+                margin-bottom: $spacing-sm
+
+                .stat
+                    +text-style(0.9rem, $text-color, $font-secondary)
+
+                    .stat-label
+                        color: $accent-color
+
+            .bonuses
+                margin-top: auto
+                padding-top: $spacing-sm
+                +text-style(0.85rem, $accent-color, $font-secondary)
+
+    .stats-distribution
+        background: $bg-dark
+        padding: $spacing-md
+        border-radius: $border-radius
+        margin-bottom: $spacing-md
+
+        h3
+            +text-style(1.2rem, $accent-color, $font-primary)
+            margin-bottom: $spacing-sm
+            font-size: 1.1rem
+
+        .stat-row
+            +flex-between
+            margin-bottom: $spacing-sm
+            padding: $spacing-xs $spacing-sm
+            background: $bg-light
+            border-radius: $border-radius
+
+            .stat-name
+                +text-style(0.95rem, $text-color, $font-primary)
+                min-width: 120px
+                font-size: 0.9rem
+
+            .stat-controls
+                +flex-center
+                gap: $spacing-xs
+
+                button
+                    +button-style
+                    width: 32px
+                    height: 32px
+                    padding: 0
+                    font-size: 0.9rem
+
+                input
+                    +input-style
+                    width: 60px
+                    text-align: center
+                    font-size: 0.9rem
+                    padding: $spacing-xs
+
+            .stat-value
+                +text-style(1rem, $accent-color, $font-primary)
+                min-width: 50px
+                text-align: center
+                font-size: 0.95rem
+
+            .stat-modifier
+                +text-style(0.9rem, $accent-color, $font-secondary)
+                min-width: 50px
+                text-align: center
+
+    .equipment-selection
+        h3
+            +text-style(1.2rem, $accent-color, $font-primary)
+            margin-bottom: $spacing-md
+            font-size: 1.1rem
+
+        .equipment-grid
+            display: grid
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr))
+            gap: $spacing-md
+            margin-bottom: $spacing-md
+
+        .equipment-item
+            +card-style
+            cursor: pointer
+            +transition(all)
+            display: flex
+            flex-direction: column
+            overflow: hidden
+
+            &:hover
+                transform: translateY(-5px)
+                box-shadow: $shadow-lg
+
+            &.selected
+                border-color: $accent-color
+                background: rgba($accent-color, 0.1)
+                box-shadow: 0 0 0 3px rgba($accent-color, 0.2)
+
+            img
+                width: 100%
+                height: auto
+                object-fit: cover
+                border-radius: $border-radius
+                margin-bottom: $spacing-sm
+                flex-shrink: 0
+
+            .card-content
+                flex: 1
+                display: flex
+                flex-direction: column
+
+            h3
+                +text-style(1.2rem, $accent-color, $font-primary)
+                margin-bottom: $spacing-sm
+
+            .item-description
+                +text-style(0.9rem, $text-color, $font-secondary)
+                line-height: 1.5
+                margin-bottom: $spacing-sm
+
+            .stats
+                display: grid
+                grid-template-columns: repeat(2, 1fr)
+                gap: $spacing-xs
+                margin-bottom: $spacing-sm
+
+                .stat
+                    +text-style(0.9rem, $text-color, $font-secondary)
+
+                    .stat-label
+                        color: $accent-color
+
+            .bonuses
+                margin-top: auto
+                padding-top: $spacing-sm
+                +text-style(0.85rem, $accent-color, $font-secondary)
+
+        .character-name-input
+            margin-top: $spacing-md
+            padding-top: $spacing-md
+            border-top: 2px solid $accent-color
+
+            label
+                +text-style(1rem, $accent-color, $font-primary)
+                display: block
+                margin-bottom: $spacing-xs
+                font-size: 0.95rem
+
+            input
+                +input-style
+                width: 100%
+                padding: $spacing-sm $spacing-md
+                font-size: 1rem
+
+    .form-actions
+        +flex-between
+        margin-top: $spacing-md
+        padding-top: $spacing-md
+        border-top: 2px solid $accent-color
+        flex-shrink: 0
+        gap: $spacing-sm
+
+        button,
+        .btn
+            +button-style
+            border: 2px solid $accent-color
+            padding: $spacing-xs $spacing-md
+            font-size: 0.9rem
+            font-weight: 600
+            letter-spacing: 0.5px
+            text-transform: uppercase
+            +transition(all)
+            flex: 1
+
+            &:hover
+                transform: translateY(-2px)
+                box-shadow: 0 4px 12px rgba($accent-color, 0.4)
+
+            &:active
+                transform: translateY(0)
+
+            &.btn-secondary
+                +button-style($bg-dark, color.adjust($bg-dark, $lightness: 10%))
+                border-color: color.adjust($bg-dark, $lightness: 10%)
+
+            &.btn-primary
+                +button-style($accent-color, color.adjust($accent-color, $lightness: -10%))
+                border-color: $accent-color
+
+    +mobile
+        padding: $spacing-md
+
+        .creation-steps
+            flex-direction: column
+            gap: $spacing-sm
+
+        .race-selection,
+        .class-selection
+            grid-template-columns: 1fr
+
+        .stats-distribution .stat-row
+            flex-direction: column
+            gap: $spacing-sm
+

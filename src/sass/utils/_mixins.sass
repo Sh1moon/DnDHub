@@ -1,0 +1,95 @@
+@use "sass:color"
+@use 'variables' as *
+
+// Flexbox миксины
+=flex-center
+    display: flex
+    justify-content: center
+    align-items: center
+
+=flex-between
+    display: flex
+    justify-content: space-between
+    align-items: center
+
+=flex-start
+    display: flex
+    justify-content: flex-start
+    align-items: center
+
+=flex-column
+    display: flex
+    flex-direction: column
+
+// Текст стили
+=text-style($size, $color: $text-color, $font: $font-secondary, $weight: normal)
+    font-size: $size
+    color: $color
+    font-family: $font
+    font-weight: $weight
+
+// Переходы
+=transition($properties, $duration: 0.3s, $easing: ease)
+    transition: $properties $duration $easing
+
+// Кнопки
+=button-style($bg: $accent-color, $hover-bg: color.adjust($accent-color, $lightness: -10%))
+    background: $bg
+    color: $text-color
+    border: 2px solid $accent-color
+    border-radius: $border-radius
+    padding: $spacing-sm $spacing-md
+    cursor: pointer
+    +transition(all)
+    font-family: $font-primary
+    +text-style(1rem, $text-color, $font-primary)
+    
+    &:hover
+        background: $hover-bg
+        transform: translateY(-2px)
+        box-shadow: $shadow
+    
+    &:active
+        transform: translateY(0)
+    
+    &:disabled
+        opacity: 0.5
+        cursor: not-allowed
+        transform: none
+
+// Карточки
+=card-style
+    background: $bg-light
+    border: 2px solid $accent-color
+    border-radius: $border-radius
+    padding: $spacing-md
+    box-shadow: $shadow
+    +transition(all)
+
+// Input стили
+=input-style
+    background: $bg-light
+    border: 2px solid $accent-color
+    border-radius: $border-radius
+    padding: $spacing-sm
+    color: $text-color
+    font-family: $font-secondary
+    +text-style(1rem, $text-color, $font-secondary)
+    
+    &:focus
+        outline: none
+        border-color: color.adjust($accent-color, $lightness: 10%)
+        box-shadow: 0 0 0 3px rgba($accent-color, 0.2)
+    
+    &::placeholder
+        color: rgba($text-color, 0.5)
+
+// Responsive
+=mobile
+    @media (max-width: $mobile)
+        @content
+
+=tablet
+    @media (max-width: $tablet)
+        @content
+

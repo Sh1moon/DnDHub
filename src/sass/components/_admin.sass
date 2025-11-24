@@ -1,0 +1,290 @@
+@use "sass:color"
+@use '../utils/variables' as *
+@use '../utils/mixins' as *
+
+.admin-panel
+    max-width: 1400px
+    margin: $spacing-lg auto
+    padding: $spacing-lg
+
+    &__header
+        margin-bottom: $spacing-xl
+        border-bottom: 2px solid $accent-color
+        padding-bottom: $spacing-lg
+
+        h2
+            +text-style(2.5rem, $accent-color, $font-primary)
+            margin: 0
+            font-weight: 600
+
+    &__tabs
+        display: flex
+        gap: $spacing-sm
+        margin-bottom: $spacing-xl
+        border-bottom: 2px solid rgba($accent-color, 0.3)
+
+        .admin-tab
+            padding: $spacing-sm $spacing-lg
+            +text-style(1.1rem, $text-color, $font-primary)
+            background: none
+            border: none
+            border-bottom: 3px solid transparent
+            cursor: pointer
+            +transition(all, 0.2s)
+            font-weight: 500
+
+            &:hover
+                color: $accent-color
+                background: rgba($accent-color, 0.1)
+
+            &.active
+                color: $accent-color
+                border-bottom-color: $accent-color
+                font-weight: 600
+
+    &__content
+        background: $bg-light
+        border: 2px solid $accent-color
+        border-radius: $border-radius
+        padding: $spacing-xl
+        min-height: 400px
+
+.admin-section
+    &__header
+        +flex-between
+        align-items: center
+        margin-bottom: $spacing-lg
+        padding-bottom: $spacing-md
+        border-bottom: 2px solid rgba($accent-color, 0.3)
+
+        h3
+            +text-style(1.8rem, $accent-color, $font-primary)
+            margin: 0
+            font-weight: 600
+
+        .entity-type-selector
+            display: flex
+            gap: $spacing-sm
+            flex-wrap: wrap
+
+.entity-edit-modal,
+.user-edit-modal
+    .modal
+        max-width: 900px
+        width: 95%
+
+    .modal__content
+        max-width: 900px
+        width: 100%
+        max-height: 85vh
+        overflow-y: auto
+        overflow-x: hidden
+        padding: $spacing-xl
+        display: flex
+        flex-direction: column
+
+        h2
+            +text-style(1.5rem, $accent-color, $font-primary)
+            margin-bottom: $spacing-lg
+            font-weight: 600
+            flex-shrink: 0
+
+    .entity-form
+        display: flex
+        flex-direction: column
+        gap: $spacing-md
+        flex: 1
+        min-height: 0
+        overflow-y: auto
+
+        .form-group
+            display: flex
+            flex-direction: column
+            gap: $spacing-xs
+            flex-shrink: 0
+
+        .form-row
+            display: grid
+            grid-template-columns: 1fr 1fr
+            gap: $spacing-md
+
+            .form-label
+                +text-style(0.9rem, $accent-color, $font-primary)
+                font-weight: 600
+
+            .form-input
+                +input-style
+                width: 100%
+                padding: $spacing-sm $spacing-md
+                font-size: 0.95rem
+                background: $bg-dark
+                border: 2px solid rgba($accent-color, 0.3)
+                border-radius: $border-radius
+                +transition(all)
+
+                &:focus
+                    border-color: $accent-color
+                    background: $bg-light
+                    outline: none
+                    box-shadow: 0 0 0 3px rgba($accent-color, 0.15)
+
+            .form-textarea
+                min-height: 80px
+                resize: vertical
+                font-family: $font-secondary
+
+        .image-preview
+            margin-top: $spacing-sm
+            flex-shrink: 0
+
+            img
+                border-radius: $border-radius
+                border: 2px solid $accent-color
+                max-width: 100%
+                height: auto
+
+        .form-actions
+            display: flex
+            gap: $spacing-md
+            margin-top: auto
+            padding-top: $spacing-md
+            border-top: 2px solid rgba($accent-color, 0.2)
+            flex-wrap: wrap
+            flex-shrink: 0
+
+            .btn
+                flex: 1
+                min-width: 120px
+
+.data-table-container
+    overflow-x: auto
+    margin-top: $spacing-lg
+
+.data-table
+    width: 100%
+    border-collapse: collapse
+    background: $bg-dark
+    border-radius: $border-radius
+    overflow: hidden
+
+    thead
+        background: rgba($accent-color, 0.2)
+
+        th
+            +text-style(1rem, $accent-color, $font-primary)
+            padding: $spacing-md
+            text-align: left
+            font-weight: 600
+            border-bottom: 2px solid $accent-color
+
+    tbody
+        tr
+            border-bottom: 1px solid rgba($accent-color, 0.1)
+            +transition(all, 0.2s)
+
+            &:hover
+                background: rgba($accent-color, 0.05)
+
+            &:last-child
+                border-bottom: none
+
+            td
+                +text-style(0.95rem, $text-color, $font-secondary)
+                padding: $spacing-md
+
+                &.actions
+                    display: flex
+                    gap: $spacing-sm
+
+                    .btn
+                        padding: $spacing-xs $spacing-sm
+                        font-size: 0.9rem
+
+.stats-grid
+    display: grid
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr))
+    gap: $spacing-lg
+    margin-bottom: $spacing-xl
+
+.stat-card
+    background: $bg-dark
+    border: 2px solid $accent-color
+    border-radius: $border-radius
+    padding: $spacing-lg
+    text-align: center
+    +transition(all, 0.2s)
+
+    &:hover
+        transform: translateY(-5px)
+        box-shadow: $shadow-lg
+
+    .stat-value
+        +text-style(3rem, $accent-color, $font-primary)
+        font-weight: 700
+        margin-bottom: $spacing-xs
+
+    .stat-label
+        +text-style(1rem, $text-color, $font-secondary)
+
+.data-actions
+    display: flex
+    gap: $spacing-md
+    margin-top: $spacing-xl
+    padding-top: $spacing-lg
+    border-top: 2px solid rgba($accent-color, 0.2)
+
+    .btn
+        flex: 1
+        padding: $spacing-md
+        font-size: 1rem
+        font-weight: 600
+
++mobile
+    .admin-panel
+        padding: $spacing-md
+
+        &__tabs
+            flex-wrap: wrap
+
+        &__content
+            padding: $spacing-md
+
+    .admin-section
+        &__header
+            flex-direction: column
+            align-items: flex-start
+            gap: $spacing-md
+
+    .data-table-container
+        overflow-x: scroll
+
+    .stats-grid
+        grid-template-columns: 1fr 1fr
+
+    .data-actions
+        flex-direction: column
+
+    .entity-edit-modal
+        .modal
+            width: 98%
+            max-width: 98%
+
+        .modal__content
+            width: 100%
+            max-width: 100%
+            padding: $spacing-md
+            max-height: 90vh
+
+            h2
+                font-size: 1.3rem
+                margin-bottom: $spacing-md
+
+        .entity-form
+            gap: $spacing-sm
+
+            .form-actions
+                flex-direction: column
+
+                .btn
+                    width: 100%
+

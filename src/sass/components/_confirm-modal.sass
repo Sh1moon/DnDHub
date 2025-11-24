@@ -1,0 +1,150 @@
+@use "sass:color"
+@use '../utils/variables' as *
+@use '../utils/mixins' as *
+
+.confirm-modal-overlay
+    display: none !important
+    position: fixed
+    top: 0
+    left: 0
+    width: 100%
+    height: 100%
+    background: rgba(0, 0, 0, 0.85)
+    backdrop-filter: blur(8px)
+    z-index: 4000
+    +flex-center
+    opacity: 0
+    +transition(all, 0.3s)
+
+    &.active
+        display: flex !important
+        opacity: 1
+
+    .confirm-modal
+        background: $bg-light
+        border: 2px solid $accent-color
+        border-radius: $border-radius
+        box-shadow: $shadow-lg
+        max-width: 500px
+        width: 90%
+        position: relative
+        overflow: hidden
+        transform: scale(0.9) translateY(30px)
+        +transition(all, 0.3s)
+        display: flex
+        flex-direction: column
+
+        // Декоративные углы
+        &::before
+            content: ''
+            position: absolute
+            top: 0
+            left: 0
+            width: 60px
+            height: 60px
+            background-image: url('../../img/corner.svg')
+            background-size: contain
+            background-repeat: no-repeat
+            background-position: top left
+            z-index: 1
+            pointer-events: none
+
+        &::after
+            content: ''
+            position: absolute
+            bottom: 0
+            right: 0
+            width: 60px
+            height: 60px
+            background-image: url('../../img/corner.svg')
+            background-size: contain
+            background-repeat: no-repeat
+            background-position: bottom right
+            transform: rotate(180deg)
+            z-index: 1
+            pointer-events: none
+
+        .confirm-modal-overlay.active &
+            transform: scale(1) translateY(0)
+
+        &__header
+            background: $bg-dark
+            padding: $spacing-lg
+            position: relative
+            border-bottom: 2px solid $accent-color
+            z-index: 2
+
+            h2
+                +text-style(1.8rem, $accent-color, $font-primary)
+                margin: 0
+                font-weight: 600
+                text-align: center
+
+        &__close
+            position: absolute
+            top: $spacing-sm
+            right: $spacing-sm
+            background: none
+            border: none
+            color: $accent-color
+            font-size: 2rem
+            cursor: pointer
+            width: 32px
+            height: 32px
+            +flex-center
+            +transition(all, 0.2s)
+            z-index: 10
+            padding: 0
+            line-height: 1
+
+            &:hover
+                transform: scale(1.2) rotate(90deg)
+                color: color.adjust($accent-color, $lightness: 10%)
+
+        &__body
+            padding: $spacing-xl
+            position: relative
+            z-index: 2
+            +text-style(1.1rem, $text-color, $font-secondary)
+            line-height: 1.6
+            text-align: center
+
+            p
+                margin: 0
+
+        &__footer
+            padding: $spacing-lg
+            border-top: 2px solid rgba($accent-color, 0.3)
+            display: flex
+            gap: $spacing-md
+            position: relative
+            z-index: 2
+
+            .btn
+                flex: 1
+                padding: $spacing-sm $spacing-md
+                font-size: 1rem
+                font-weight: 600
+
+    +mobile
+        .confirm-modal
+            width: 95%
+            padding: $spacing-md
+
+            &__header
+                padding: $spacing-md
+
+                h2
+                    font-size: 1.5rem
+
+            &__body
+                padding: $spacing-lg
+                font-size: 1rem
+
+            &__footer
+                padding: $spacing-md
+                flex-direction: column
+
+                .btn
+                    width: 100%
+

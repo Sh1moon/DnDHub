@@ -3,138 +3,105 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="icon" href="src/img/favicon.svg" type="image/x-icon">
-    <script src="src/js/main.js" type="module"></script>
-    <link rel="stylesheet" href="src/sass/style.css">
-    <title>Главная</title>
+    <title>Dungeon Master's Hub</title>
+    <link rel="stylesheet" href="dist/css/main.css">
+    <link rel="icon" href="src/img/favicon.svg" type="image/svg+xml">
 </head>
 <body>
-    <!-- Навигационное меню -->
     <nav class="navbar">
-        <img src="src/img/logo.svg" alt="Логотип" class="logo">
+        <img src="src/img/logo.svg" alt="Логотип" class="logo" data-route="home">
         <ul class="nav-links">
-            <li><a href="#" class="nav-link protected-link" data-page="create-character">Создать персонажа</a></li>
-            <li><a href="handbook.html" class="nav-link protected-link" data-page="play">Играть</a></li>
-            <li><a href="#" class="nav-link protected-link" data-page="create-campaign">Создать кампанию</a></li>
+            <li><a href="#character-creator" class="nav-link protected-link" data-route="character-creator">Создать персонажа</a></li>
+            <li><a href="#characters" class="nav-link protected-link" data-route="characters">Мои персонажи</a></li>
+            <li><a href="#spellbook" class="nav-link protected-link" data-route="spellbook">Играть</a></li>
+            <li><a href="#rooms" class="nav-link protected-link" data-route="rooms">Создать кампанию</a></li>
         </ul>
         <div class="user-section">
             <span class="user-name" id="userName"></span>
             <img src="src/img/user.svg" alt="Пользователь" class="user-icon" id="userIcon">
-            
-            <!-- Меню пользователя -->
             <div class="user-menu" id="userMenu">
                 <div class="user-menu__info">
                     <div class="user-menu__name" id="userMenuName"></div>
                     <div class="user-menu__email" id="userMenuEmail"></div>
                 </div>
+                <button class="user-menu__item" id="adminPanelBtn" style="display: none;">Админ панель</button>
                 <button class="user-menu__item" id="logoutBtn">Выйти</button>
             </div>
         </div>
     </nav>
 
-    <!-- Слайдер -->
-    <section class="slider">
-        <button class="slider-arrow slider-prev" id="sliderPrev">
-            <img src="src/img/slideArrow.svg" alt="Стрелка влево" style="width:174px">
-        </button>
-
-        <div class="slider__inner">
-            <div class="slider__content active">
-                <h2 class="slider__txt">Твори</h2>
-                <img src="src/img/tvori.png" alt="Твори" class="slider__img">
-            </div>
-            <div class="slider__content">
-                <h2 class="slider__txt">Играй</h2>
-                <img src="src/img/Play.png" alt="Играй" class="slider__img">
-            </div>
-            <div class="slider__content">
-                <h2 class="slider__txt">Изучай</h2>
-                <img src="src/img/Izuchay.png" alt="Изучай" class="slider__img">
-            </div>
-        </div>
-
-        <button class="slider-arrow slider-next" id="sliderNext">
-            <img src="src/img/slideArrow.svg" alt="Стрелка вправо" style="width:174px;transform:rotate(180deg)">
-        </button>
-    </section>
-
-    <!-- Контент -->
-    <main class="container">
-        <section class="content-section">
-            <h2 class="section-title">Dungeon Master's Hub — это больше чем приложение, это страсть к миру D&D</h2>
-            <p class="section-text">
-                Как мастер игры и разработчик в одном лице, я столкнулся с проблемой: не существует удобного русскоязычного инструмента для проведения онлайн-сессий D&D. Разрозненные таблицы, десятки вкладок с правилами, сложная синхронизация между игроками — всё это мешало погружению в игру. Я решил создать решение, которое объединит всё необходимое в одном месте — от базы правил до инструментов коммуникации, с акцентом на простоту и удобство для русскоязычного комьюнити.
-            </p>
-        </section>
-
-        <section class="content-section">
-            <h2 class="section-title">Что такое Dungeons & Dragons?</h2>
-            <p class="section-text">
-                Dungeons & Dragons — это больше чем настольная игра. Это врата в мир фэнтези, где вы становитесь героем собственной саги. Здесь книга правил превращается в живую историю, написанную совместно мастером и игроками. Каждый бросок кубиков — это поворот сюжета, каждое решение персонажа — новая глава в эпическом повествовании. Вы можете быть могучим воином, хитрым плутом или могущественным волшебником, но главное — вы будете тем, кем захотите. Это пространство для творчества, где воображение не знает границ, а дружба и приключения становятся реальностью.
-            </p>
-        </section>
-
-        <section class="content-section">
-            <h2 class="section-title">Как работает наша платформа?</h2>
-            <p class="section-text">
-                Dungeon Master's Hub создан специально для русскоязычных поклонников D&D. Мы объединили все необходимое для игры в одном месте — от полной базы правил до удобных инструментов для ведения кампаний. Создавайте персонажей в интуитивном редакторе, храните заметки в организованном пространстве, общайтесь с игроками через встроенную систему сообщений. Наша платформа отслеживает состояние персонажей и предоставляет мгновенный доступ к любой информации из правил. Теперь вы можете сосредоточиться на самом важном — игре.
-            </p>
-        </section>
+    <main id="appContent">
+        <!-- Контент будет загружаться динамически -->
     </main>
 
-    <!-- Футер -->
-    <footer class="footer">
-        <img src="src/img/corner.svg" alt="" class="cornerLeft">
-        <div class="footer__content">
-            <ul class="footer__list">
-                <a href="#" class="txt link protected-link" data-page="play"><li class="footer__item">Играть</li></a>
-                <a href="#" class="txt link protected-link" data-page="create-character"><li class="footer__item">Создать персонажа</li></a>
-                <a href="#" class="txt link protected-link" data-page="create-campaign"><li class="footer__item">Создать комнату</li></a>
-            </ul>
-
-            <a href="/"><img src="src/img/logo.svg" alt="Логотип" style="width: 13rem"></a>
-
-            <div class="social">
-                <a href="#">
-                    <img src="src/img/telegram.svg" alt="Telegram" class="logo">
-                </a>
-                <a href="#">
-                    <img src="src/img/vk.svg" alt="VK" class="logo">
-                </a>
-                <a href="#">
-                    <img src="src/img/whatsapp.svg" alt="WhatsApp" class="logo">
-                </a>
+    <!-- Модальное окно авторизации (новое) -->
+    <div class="auth-modal-overlay" id="authModal">
+        <div class="auth-modal">
+            <button class="auth-modal__close" id="closeAuthModal" aria-label="Закрыть">&times;</button>
+            <div class="auth-modal__header">
+                <h2 class="auth-modal__title" id="authModalTitle">Вход в аккаунт</h2>
+                <p class="auth-modal__subtitle" id="authModalSubtitle">Добро пожаловать обратно!</p>
             </div>
-        </div>
-        <img src="src/img/corner.svg" alt="" class="cornerRight">
-    </footer>
-
-    <!-- Модальное окно авторизации -->
-    <div class="modal-overlay" id="authModal">
-        <div class="modal">
-            <div class="modal-header">
-                <h3 class="modal-title" id="modalTitle">Вход</h3>
-                <button class="close-modal" id="closeModal">&times;</button>
+            <div class="auth-modal__body">
+                <form id="authForm" class="auth-form">
+                    <div class="form-group" id="nameInputGroup" style="display: none;">
+                        <label for="nameInput" class="form-label">Имя</label>
+                        <input type="text" id="nameInput" class="form-input" placeholder="Введите ваше имя" autocomplete="name">
+                        <span class="form-error" id="nameError"></span>
+                    </div>
+                    <div class="form-group">
+                        <label for="username" class="form-label">Email или логин</label>
+                        <input type="text" id="username" class="form-input" placeholder="Введите email или логин" required autocomplete="username">
+                        <span class="form-error" id="usernameError"></span>
+                    </div>
+                    <div class="form-group" id="passwordGroup">
+                        <label for="password" class="form-label">Пароль</label>
+                        <div class="password-input-wrapper">
+                            <input type="password" id="password" class="form-input" placeholder="Введите пароль" required autocomplete="current-password" name="password">
+                            <button type="button" class="password-toggle" id="passwordToggle" aria-label="Показать пароль">👁</button>
+                        </div>
+                        <span class="form-error" id="passwordError"></span>
+                        <a href="#" class="forgot-password-link" id="forgotPassword">Забыли пароль?</a>
+                    </div>
+                    <div class="form-group form-group-checkbox" id="rememberMeGroup">
+                        <label class="checkbox-label">
+                            <input type="checkbox" id="rememberMe" class="checkbox-input">
+                            <span class="checkbox-text">Запомнить меня</span>
+                        </label>
+                    </div>
+                    <button type="submit" class="auth-submit-btn" id="submitBtn">
+                        <span class="btn-text">Войти</span>
+                        <span class="btn-loader" style="display: none;">⏳</span>
+                    </button>
+                </form>
             </div>
-            <form id="authForm">
-                <div class="form-group">
-                    <label class="form-label">Имя пользователя</label>
-                    <input type="text" class="form-input" id="username" required>
+            <div class="auth-modal__footer">
+                <div class="auth-switch">
+                    <span id="authSwitchText">У меня нет аккаунта. </span>
+                    <button type="button" class="auth-link" id="authSwitch">Зарегистрироваться</button>
                 </div>
-                <div class="form-group">
-                    <label class="form-label">Пароль</label>
-                    <input type="password" class="form-input" id="password" required>
-                </div>
-                <button type="submit" class="btn" id="submitBtn">Войти</button>
-            </form>
-            <div class="auth-switch">
-                <span id="authSwitchText">Нет аккаунта? </span>
-                <span class="auth-link" id="authSwitch">Зарегистрироваться</span>
             </div>
         </div>
     </div>
 
     <!-- Уведомление -->
     <div class="notification" id="notification"></div>
+
+    <!-- Подключение JavaScript модулей -->
+    <script src="src/js/admin.js"></script>
+    <script src="src/js/database.js"></script>
+    <script src="src/js/auth.js"></script>
+    <script src="src/js/ui-components.js"></script>
+    <script src="src/js/confirm-modal.js"></script>
+    <script src="src/js/modal-fix.js"></script>
+    <script src="src/js/character-manager.js"></script>
+    <script src="src/js/character-list.js"></script>
+    <script src="src/js/room-manager.js"></script>
+    <script src="src/js/spellbook.js"></script>
+    <script src="src/js/campaign-game.js"></script>
+    <script src="src/js/app.js"></script>
+
+    <!-- Обработчики меню пользователя управляются через app.js -->
 </body>
 </html>
+

@@ -1,0 +1,142 @@
+@use "sass:color"
+@use '../utils/variables' as *
+@use '../utils/mixins' as *
+
+.notification
+    position: fixed
+    top: $spacing-lg
+    right: $spacing-lg
+    min-width: 320px
+    max-width: 400px
+    background: linear-gradient(135deg, $bg-light 0%, color.adjust($bg-light, $lightness: 2%) 100%)
+    border: 2px solid $accent-color
+    border-radius: $border-radius
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.4)
+    z-index: 5000
+    opacity: 0
+    transform: translateX(400px)
+    +transition(all)
+    animation: slideInRight 0.3s ease forwards
+
+    &.active
+        opacity: 1
+        transform: translateX(0)
+
+    &__content
+        padding: $spacing-md $spacing-lg
+        display: flex
+        align-items: flex-start
+        gap: $spacing-md
+        position: relative
+
+    &__icon
+        flex-shrink: 0
+        width: 32px
+        height: 32px
+        border-radius: 50%
+        +flex-center
+        font-size: 1.2rem
+        font-weight: bold
+
+    &__text
+        flex: 1
+
+    &__title
+        +text-style(0.9rem, $accent-color, $font-primary)
+        font-weight: 600
+        margin-bottom: $spacing-xs
+
+    &__message
+        +text-style(0.85rem, $text-color, $font-secondary)
+        line-height: 1.5
+
+    &__close
+        position: absolute
+        top: $spacing-xs
+        right: $spacing-xs
+        background: rgba($accent-color, 0.1)
+        border: 1px solid rgba($accent-color, 0.3)
+        border-radius: 50%
+        color: $accent-color
+        font-size: 1.5rem
+        cursor: pointer
+        width: 28px
+        height: 28px
+        +flex-center
+        +transition(all)
+        padding: 0
+        line-height: 1
+
+        &:hover
+            background: rgba($accent-color, 0.2)
+            border-color: $accent-color
+            transform: scale(1.1) rotate(90deg)
+
+    // Типы уведомлений
+    &.success
+        border-color: #4caf50
+
+        .notification__icon
+            background: rgba(#4caf50, 0.2)
+            color: #4caf50
+
+        .notification__close
+            border-color: rgba(#4caf50, 0.3)
+            color: #4caf50
+
+            &:hover
+                background: rgba(#4caf50, 0.2)
+                border-color: #4caf50
+
+    &.error
+        border-color: #f44336
+
+        .notification__icon
+            background: rgba(#f44336, 0.2)
+            color: #f44336
+
+        .notification__close
+            border-color: rgba(#f44336, 0.3)
+            color: #f44336
+
+            &:hover
+                background: rgba(#f44336, 0.2)
+                border-color: #f44336
+
+    &.warning
+        border-color: #ff9800
+
+        .notification__icon
+            background: rgba(#ff9800, 0.2)
+            color: #ff9800
+
+        .notification__close
+            border-color: rgba(#ff9800, 0.3)
+            color: #ff9800
+
+            &:hover
+                background: rgba(#ff9800, 0.2)
+                border-color: #ff9800
+
+    &.info
+        border-color: $accent-color
+
+        .notification__icon
+            background: rgba($accent-color, 0.2)
+            color: $accent-color
+
+@keyframes slideInRight
+    from
+        transform: translateX(400px)
+        opacity: 0
+    to
+        transform: translateX(0)
+        opacity: 1
+
++mobile
+    .notification
+        right: $spacing-sm
+        left: $spacing-sm
+        min-width: auto
+        max-width: none
+
