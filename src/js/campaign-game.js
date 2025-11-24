@@ -871,11 +871,32 @@ class CampaignGame {
             item.classList.add('selected');
         };
 
-        // Привязываем обработчик к modalBody для надежности
+        // Привязываем обработчик к modalBody для надежности (capture phase)
         modalBody.addEventListener('click', handleSpellItemClick, true);
         
         // Также привязываем напрямую к spellsListContainer для дополнительной надежности
         spellsListContainer.addEventListener('click', handleSpellItemClick, true);
+        
+        // Добавляем обработчик напрямую к элементам после их создания
+        const attachDirectHandlers = () => {
+            const items = spellsListContainer.querySelectorAll('.spell-list-item');
+            items.forEach(item => {
+                // Удаляем старые обработчики, если они есть
+                const newItem = item.cloneNode(true);
+                item.parentNode.replaceChild(newItem, item);
+                
+                // Добавляем новый обработчик
+                newItem.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    e.stopImmediatePropagation();
+                    handleSpellItemClick(e);
+                }, true);
+            });
+        };
+        
+        // Привязываем обработчики после первой загрузки
+        setTimeout(attachDirectHandlers, 100);
 
         // Функция фильтрации и отображения заклинаний
         const filterAndRenderSpells = () => {
@@ -915,6 +936,9 @@ class CampaignGame {
                     selectedItem.classList.add('selected');
                 }
             }
+            
+            // Перепривязываем прямые обработчики после перерисовки
+            attachDirectHandlers();
         };
 
         // Инициализируем список заклинаний при первой загрузке
