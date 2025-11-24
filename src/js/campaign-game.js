@@ -826,8 +826,9 @@ class CampaignGame {
 
         let selectedSpellId = null;
 
-        // Обработчик кликов на элементах списка - добавляем один раз с делегированием
-        spellsListContainer.addEventListener('click', (e) => {
+        // Обработчик кликов на элементах списка - используем делегирование событий
+        // Привязываем к modalBody для надежности, так как содержимое может перерисовываться
+        const handleSpellItemClick = (e) => {
             const item = e.target.closest('.spell-list-item');
             if (!item) {
                 return;
@@ -862,7 +863,10 @@ class CampaignGame {
                 i.classList.remove('selected');
             });
             item.classList.add('selected');
-        }, true); // Используем capture phase для приоритета
+        };
+
+        // Привязываем обработчик к modalBody для надежности
+        modalBody.addEventListener('click', handleSpellItemClick, true);
 
         // Функция фильтрации и отображения заклинаний
         const filterAndRenderSpells = () => {
