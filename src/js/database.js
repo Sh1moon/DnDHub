@@ -381,6 +381,75 @@ class Database {
     }
 }
 
+    // Управление друзьями
+    getFriends(userId) {
+        const users = this.getData('users') || [];
+        const user = users.find(u => u.id === userId);
+        if (!user) return [];
+        return (user.friends || []).map(friendId => users.find(u => u.id === friendId)).filter(Boolean);
+    }
+
+    addFriend(userId, friendId) {
+        const users = this.getData('users') || [];
+        const user = users.find(u => u.id === userId);
+        if (!user) return false;
+        
+        if (!user.friends) user.friends = [];
+        if (!user.friends.includes(friendId)) {
+            user.friends.push(friendId);
+            this.updateData('users', users);
+            return true;
+        }
+        return false;
+    }
+
+    removeFriend(userId, friendId) {
+        const users = this.getData('users') || [];
+        const user = users.find(u => u.id === userId);
+        if (!user || !user.friends) return false;
+        
+        user.friends = user.friends.filter(id => id !== friendId);
+        this.updateData('users', users);
+        return true;
+    }
+
+    searchUsers(query, excludeUserId = null) {
+        const users = this.getData('users') || [];
+        const lowerQuery = query.toLowerCase().trim();
+        
+        return users
+            .filter(u => {
+                if (excludeUserId && u.id === excludeUserId) return false;
+                if (!lowerQuery) return true;
+                return (u.name && u.name.toLowerCase().includes(lowerQuery)) ||
+                       (u.email && u.email.toLowerCase().includes(lowerQuery));
+            })
+            .slice(0, 20); // Ограничиваем результаты
+    }
+
+    // Поиск публичных комнат
+    getPublicRooms(excludeUserId = null) {
+        const rooms = this.getData('rooms') || [];
+        return rooms.filter(r => {
+            if (!r.isPublic) return false;
+            if (excludeUserId && r.ownerId === excludeUserId) return false;
+            if (r.participants && r.participants.some(p => p.userId === excludeUserId)) return false;
+            return true;
+        });
+    }
+
+    searchPublicRooms(query, excludeUserId = null) {
+        const rooms = this.getPublicRooms(excludeUserId);
+        if (!query) return rooms;
+        
+        const lowerQuery = query.toLowerCase().trim();
+        return rooms.filter(r => {
+            return (r.name && r.name.toLowerCase().includes(lowerQuery)) ||
+                   (r.description && r.description.toLowerCase().includes(lowerQuery));
+        });
+    }
+}
+
 // Экспорт для использования в других модулях
 if (typeof module !== 'undefined' && module.exports) {
     module.exports = Database;

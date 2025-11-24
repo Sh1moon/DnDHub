@@ -429,6 +429,9 @@ class App {
             case 'characters':
                 this.renderCharacters(container);
                 break;
+            case 'friends':
+                this.renderFriends(container);
+                break;
             case 'login':
                 this.renderLogin(container);
                 break;
@@ -625,6 +628,185 @@ class App {
             this.roomManager = new RoomManager(this.db, this.auth);
         }
         this.roomManager.init();
+        this.setupRoomsTabs();
+    }
+
+    setupRoomsTabs() {
+        const tabBtns = document.querySelectorAll('.tab-btn');
+        const roomsList = document.getElementById('roomsList');
+        const publicRoomsList = document.getElementById('publicRoomsList');
+        const searchInput = document.getElementById('publicRoomsSearch');
+        const searchBtn = document.getElementById('searchPublicRoomsBtn');
+
+        if (!tabBtns.length) return;
+
+        tabBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                tabBtns.forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                
+                if (btn.dataset.tab === 'my-rooms') {
+                    if (roomsList) roomsList.style.display = 'block';
+                    if (publicRoomsList) publicRoomsList.style.display = 'none';
+                    if (this.roomManager) {
+                        this.roomManager.renderRoomsList();
+                    }
+                } else {
+                    if (roomsList) roomsList.style.display = 'none';
+                    if (publicRoomsList) publicRoomsList.style.display = 'block';
+                    this.renderPublicRooms();
+                }
+            });
+        });
+
+        if (searchBtn) {
+            searchBtn.addEventListener('click', () => this.searchPublicRooms());
+        }
+
+        if (searchInput) {
+            searchInput.addEventListener('keypress', (e) => {
+                if (e.key === 'Enter') {
+                    this.searchPublicRooms();
+                }
+            });
+        }
+    }
+
+    renderPublicRooms() {
+        const container = document.getElementById('publicRoomsResults');
+        if (!container) return;
+
+        const rooms = this.db.getPublicRooms(this.auth.currentUser?.id);
+        
+        if (rooms.length === 0) {
+            container.innerHTML = '<div class="empty-state"><p>Публичные кампании не найдены</p></div>';
+            return;
+        }
+
+        container.innerHTML = `
+            <div class="public-rooms-grid">
+                ${rooms.map(room => {
+                    const owner = this.db.getData('users').find(u => u.id === room.ownerId);
+                    return `
+                        <div class="public-room-card" data-room-id="${room.id}">
+                            <div class="room-card-header">
+                                <h3>${room.name}</h3>
+                                <span class="room-badge">Публичная</span>
+                            </div>
+                            <div class="room-card-info">
+                                <p><strong>Мастер:</strong> ${owner?.name || 'Неизвестно'}</p>
+                                <p><strong>Участников:</strong> ${room.participants?.length || 0}/${room.maxParticipants || '∞'}</p>
+                                <p><strong>Уровень:</strong> ${room.minLevel || 1}-${room.maxLevel || 20}</p>
+                                ${room.description ? `<p class="room-description">${room.description}</p>` : ''}
+                            </div>
+                            <div class="room-card-actions">
+                                <button class="btn btn-primary join-public-room-btn" data-room-id="${room.id}">Присоединиться</button>
+                            </div>
+                        </div>
+                    `;
+                }).join('')}
+            </div>
+        `;
+
+        container.querySelectorAll('.join-public-room-btn').forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                e.stopPropagation();
+                const roomId = parseInt(btn.dataset.roomId);
+                if (this.roomManager) {
+                    this.roomManager.joinRoom(roomId);
+                }
+            });
+        });
+    }
+
+    searchPublicRooms() {
+        const searchInput = document.getElementById('publicRoomsSearch');
+        const container = document.getElementById('publicRoomsResults');
+        
+        if (!searchInput || !container) return;
+
+        const query = searchInput.value.trim();
+        const rooms = this.db.searchPublicRooms(query, this.auth.currentUser?.id);
+
+        if (rooms.length === 0) {
+            container.innerHTML = '<div class="empty-state"><p>Кампании не найдены</p></div>';
+            return;
+        }
+
+        container.innerHTML = `
+            <div class="public-rooms-grid">
+                ${rooms.map(room => {
+                    const owner = this.db.getData('users').find(u => u.id === room.ownerId);
+                    return `
+                        <div class="public-room-card" data-room-id="${room.id}">
+                            <div class="room-card-header">
+                                <h3>${room.name}</h3>
+                                <span class="room-badge">Публичная</span>
+                            </div>
+                            <div class="room-card-info">
+                                <p><strong>Мастер:</strong> ${owner?.name || 'Неизвестно'}</p>
+                                <p><strong>Участников:</strong> ${room.participants?.length || 0}/${room.maxParticipants || '∞'}</p>
+                                <p><strong>Уровень:</strong> ${room.minLevel || 1}-${room.maxLevel || 20}</p>
+                                ${room.description ? `<p class="room-description">${room.description}</p>` : ''}
+                            </div>
+                            <div class="room-card-actions">
+                                <button class="btn btn-primary join-public-room-btn" data-room-id="${room.id}">Присоединиться</button>
+                            </div>
+                        </div>
+                    `;
+                }).join('')}
+            </div>
+        `;
+
+        container.querySelectorAll('.join-public-room-btn').forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                e.stopPropagation();
+                const roomId = parseInt(btn.dataset.roomId);
+                if (this.roomManager) {
+                    this.roomManager.joinRoom(roomId);
+                }
+            });
+        });
+    }
+
+    renderFriends(container) {
+        if (!this.auth.isAuthenticated()) {
+            container.innerHTML = `
+                <div class="section">
+                    <h2>Необходима авторизация</h2>
+                    <p>Пожалуйста, войдите в систему для управления друзьями.</p>
+                    <a href="#login" data-route="login">Войти</a>
+                </div>
+            `;
+            return;
+        }
+
+        container.innerHTML = `
+            <div class="friends-manager">
+                <div class="friends-manager__header">
+                    <h2>Друзья</h2>
+                </div>
+                <div class="friends-manager__content">
+                    <div class="friends-search-section">
+                        <h3>Поиск игроков</h3>
+                        <div class="search-input-wrapper">
+                            <input type="text" id="friendSearchInput" class="search-input" placeholder="Введите имя или email...">
+                            <button class="btn btn-primary" id="friendSearchBtn">Поиск</button>
+                        </div>
+                        <div id="friendSearchResults" class="search-results"></div>
+                    </div>
+                    <div class="friends-list-section">
+                        <h3>Мои друзья</h3>
+                        <div id="friendsList" class="friends-list"></div>
+                    </div>
+                </div>
+            </div>
+        `;
+
+        if (!this.friendsManager) {
+            this.friendsManager = new FriendsManager(this.db, this.auth);
+        }
+        this.friendsManager.init();
     }
 
     renderSpellbook(container) {
@@ -646,10 +828,12 @@ class App {
                                 <img src="src/img/directory.svg" alt="Справочник">
                                 <p class="txt hidden">Справочник</p>
                             </li>
-                            <li class="aside__items">
-                                <img src="src/img/friends.svg" alt="Друзья">
-                                <p class="txt hidden">Друзья</p>
-                            </li>
+                            <a href="#friends" data-route="friends">
+                                <li class="aside__items">
+                                    <img src="./src/img/friends.svg" alt="Друзья">
+                                    <p class="txt hidden link">Друзья</p>
+                                </li>
+                            </a>
                         </ul>
                     </div>
                 </aside>

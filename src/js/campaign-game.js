@@ -785,7 +785,7 @@ class CampaignGame {
 
     renderSpellsList(spells) {
         return spells.map(spell => {
-            const photoPath = spell.фото || `src/img/spells/${spell.id || 'default'}.png`;
+            const photoPath = spell.фото || `./src/img/spells/${spell.id || 'default'}.png`;
             return `
                 <div class="spell-list-item" data-spell-id="${spell.id}">
                     <img src="${photoPath}" alt="${spell.название}" 
@@ -944,7 +944,7 @@ class CampaignGame {
             console.error('Контейнер для деталей заклинания не найден');
             return;
         }
-        const photoPath = spell.фото || `src/img/spells/${spell.id || 'default'}.png`;
+        const photoPath = spell.фото || `./src/img/spells/${spell.id || 'default'}.png`;
         container.innerHTML = `
             <div class="spell-details-content">
                 <div class="spell-details-header">

@@ -1,0 +1,209 @@
+@use '../utils/variables' as *
+@use '../utils/mixins' as *
+
+.friends-manager
+    padding: $spacing-xl
+    max-width: 1200px
+    margin: 0 auto
+
+    &__header
+        margin-bottom: $spacing-xl
+        h2
+            +text-style(2rem, $accent-color, $font-primary)
+            font-weight: 600
+
+    &__content
+        display: grid
+        grid-template-columns: 1fr 1fr
+        gap: $spacing-xl
+
+        @media (max-width: 768px)
+            grid-template-columns: 1fr
+
+.friends-search-section
+    background: $bg-light
+    border: 2px solid $accent-color
+    border-radius: $border-radius
+    padding: $spacing-lg
+
+    h3
+        +text-style(1.5rem, $accent-color, $font-primary)
+        margin-bottom: $spacing-md
+
+.search-input-wrapper
+    display: flex
+    gap: $spacing-sm
+    margin-bottom: $spacing-md
+
+    .search-input
+        flex: 1
+        +input-style
+        padding: $spacing-sm $spacing-md
+
+.search-results
+    margin-top: $spacing-md
+
+.search-results-list
+    display: flex
+    flex-direction: column
+    gap: $spacing-sm
+
+.search-result-item
+    display: flex
+    align-items: center
+    gap: $spacing-md
+    padding: $spacing-md
+    background: rgba($accent-color, 0.1)
+    border: 2px solid rgba($accent-color, 0.3)
+    border-radius: $border-radius
+    +transition(all, 0.2s)
+
+    &:hover
+        background: rgba($accent-color, 0.15)
+        border-color: rgba($accent-color, 0.5)
+
+.result-avatar
+    width: 50px
+    height: 50px
+    border-radius: 50%
+    overflow: hidden
+    background: $bg-dark
+    display: flex
+    align-items: center
+    justify-content: center
+    flex-shrink: 0
+
+    img
+        width: 100%
+        height: 100%
+        object-fit: cover
+
+.result-info
+    flex: 1
+    min-width: 0
+
+    h4
+        +text-style(1.1rem, $accent-color, $font-primary)
+        margin: 0 0 $spacing-xs 0
+
+    p
+        +text-style(0.9rem, $text-color, $font-secondary)
+        margin: 0
+        opacity: 0.8
+
+.friends-list-section
+    background: $bg-light
+    border: 2px solid $accent-color
+    border-radius: $border-radius
+    padding: $spacing-lg
+
+    h3
+        +text-style(1.5rem, $accent-color, $font-primary)
+        margin-bottom: $spacing-md
+
+.friends-list
+    min-height: 200px
+
+.friends-grid
+    display: grid
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr))
+    gap: $spacing-md
+
+.friend-card
+    display: flex
+    flex-direction: column
+    align-items: center
+    gap: $spacing-sm
+    padding: $spacing-md
+    background: rgba($accent-color, 0.1)
+    border: 2px solid rgba($accent-color, 0.3)
+    border-radius: $border-radius
+    +transition(all, 0.2s)
+
+    &:hover
+        background: rgba($accent-color, 0.15)
+        border-color: rgba($accent-color, 0.5)
+        transform: translateY(-2px)
+
+.friend-avatar
+    width: 80px
+    height: 80px
+    border-radius: 50%
+    overflow: hidden
+    background: $bg-dark
+    display: flex
+    align-items: center
+    justify-content: center
+    border: 3px solid $accent-color
+
+    img
+        width: 100%
+        height: 100%
+        object-fit: cover
+
+.friend-info
+    text-align: center
+    flex: 1
+
+    h4
+        +text-style(1.1rem, $accent-color, $font-primary)
+        margin: 0 0 $spacing-xs 0
+
+    p
+        +text-style(0.9rem, $text-color, $font-secondary)
+        margin: 0
+        opacity: 0.8
+
+.room-manager__tabs
+    display: flex
+    gap: $spacing-sm
+    margin-bottom: $spacing-md
+
+.tab-btn
+    +button-style
+    padding: $spacing-sm $spacing-md
+    background: rgba($accent-color, 0.1)
+    border: 2px solid rgba($accent-color, 0.3)
+    color: $text-color
+
+    &.active
+        background: rgba($accent-color, 0.3)
+        border-color: $accent-color
+        color: $accent-color
+
+.search-section
+    display: flex
+    gap: $spacing-sm
+    margin-bottom: $spacing-lg
+
+.public-rooms-grid
+    display: grid
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr))
+    gap: $spacing-md
+
+.public-room-card
+    background: $bg-light
+    border: 2px solid $accent-color
+    border-radius: $border-radius
+    padding: $spacing-lg
+    +transition(all, 0.2s)
+
+    &:hover
+        transform: translateY(-2px)
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3)
+
+.room-badge
+    display: inline-block
+    padding: 4px 12px
+    background: rgba($accent-color, 0.3)
+    border: 1px solid $accent-color
+    border-radius: $border-radius
+    +text-style(0.85rem, $accent-color, $font-primary)
+    font-weight: 600
+
+.room-description
+    +text-style(0.9rem, $text-color, $font-secondary)
+    margin-top: $spacing-sm
+    opacity: 0.9
+    line-height: 1.5
+
