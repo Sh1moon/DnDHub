@@ -35,19 +35,19 @@ jobs:
       - name: Build
         run: npm run build
 
-      - name: Prepare deployment files
+      - name: Clean up unnecessary files
         run: |
-          mkdir -p _site
-          cp index.html _site/
-          cp -r dist _site/ || true
-          mkdir -p _site/src
-          cp -r src/js _site/src/ || true
-          cp -r src/data _site/src/ || true
-          cp -r src/img _site/src/ || true
-          cp -r src/fonts _site/src/ || true
-          cp -r src/icons _site/src/ 2>/dev/null || true
-          ls -la _site/
-          ls -la _site/src/ || true
+          rm -rf node_modules
+          rm -rf .git
+          rm -rf .github
+          rm -f package.json
+          rm -f package-lock.json
+          rm -f .gitignore
+          rm -f README.md
+          rm -f ADMIN_ACCESS.md
+          rm -f ADMIN_TROUBLESHOOTING.md
+          rm -f QUICK_START.md
+          rm -f DEPLOY.md
 
       - name: Setup Pages
         uses: actions/configure-pages@v4
@@ -57,7 +57,7 @@ jobs:
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: _site
+          path: .
 
   deploy:
     environment:
