@@ -881,16 +881,27 @@ class CampaignGame {
         const attachDirectHandlers = () => {
             const items = spellsListContainer.querySelectorAll('.spell-list-item');
             items.forEach(item => {
-                // Удаляем старые обработчики, если они есть
-                const newItem = item.cloneNode(true);
-                item.parentNode.replaceChild(newItem, item);
-                
-                // Добавляем новый обработчик
-                newItem.addEventListener('click', (e) => {
+                // Добавляем обработчик напрямую к элементу
+                item.addEventListener('click', (e) => {
                     e.preventDefault();
                     e.stopPropagation();
                     e.stopImmediatePropagation();
-                    handleSpellItemClick(e);
+                    
+                    const id = parseInt(item.dataset.spellId);
+                    if (isNaN(id)) return;
+                    
+                    const spell = this.db.getSpells().find(s => s.id === id);
+                    if (!spell) return;
+                    
+                    const currentSpellDetailsContainer = modalBody.querySelector('#spellDetailsContainer');
+                    if (!currentSpellDetailsContainer) return;
+                    
+                    selectedSpellId = id;
+                    this.renderSpellDetails(spell, currentSpellDetailsContainer);
+                    
+                    // Подсветка выбранного элемента
+                    items.forEach(i => i.classList.remove('selected'));
+                    item.classList.add('selected');
                 }, true);
             });
         };
