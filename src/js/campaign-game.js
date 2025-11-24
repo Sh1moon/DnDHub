@@ -829,6 +829,7 @@ class CampaignGame {
         // Обработчик кликов на элементах списка - используем делегирование событий
         // Привязываем к modalBody для надежности, так как содержимое может перерисовываться
         const handleSpellItemClick = (e) => {
+            // Проверяем, что клик был на элементе списка или его дочерних элементах
             const item = e.target.closest('.spell-list-item');
             if (!item) {
                 return;
@@ -850,26 +851,41 @@ class CampaignGame {
                 return;
             }
             
-            if (!spellDetailsContainer) {
+            // Получаем контейнер заново на случай, если он был пересоздан
+            const currentSpellDetailsContainer = modalBody.querySelector('#spellDetailsContainer');
+            if (!currentSpellDetailsContainer) {
                 console.error('Контейнер для деталей заклинания не найден');
                 return;
             }
             
             selectedSpellId = id;
-            this.renderSpellDetails(spell, spellDetailsContainer);
+            this.renderSpellDetails(spell, currentSpellDetailsContainer);
             
             // Подсветка выбранного элемента
-            spellsListContainer.querySelectorAll('.spell-list-item').forEach(i => {
-                i.classList.remove('selected');
-            });
+            const currentSpellsListContainer = modalBody.querySelector('#spellsListContainer');
+            if (currentSpellsListContainer) {
+                currentSpellsListContainer.querySelectorAll('.spell-list-item').forEach(i => {
+                    i.classList.remove('selected');
+                });
+            }
             item.classList.add('selected');
         };
 
         // Привязываем обработчик к modalBody для надежности
         modalBody.addEventListener('click', handleSpellItemClick, true);
+        
+        // Также привязываем напрямую к spellsListContainer для дополнительной надежности
+        spellsListContainer.addEventListener('click', handleSpellItemClick, true);
 
         // Функция фильтрации и отображения заклинаний
         const filterAndRenderSpells = () => {
+            // Получаем контейнер заново на случай, если он был пересоздан
+            const currentSpellsListContainer = modalBody.querySelector('#spellsListContainer');
+            if (!currentSpellsListContainer) {
+                console.error('Контейнер списка заклинаний не найден');
+                return;
+            }
+            
             let spells = this.db.getSpells();
             const searchQuery = searchInput ? searchInput.value.toLowerCase().trim() : '';
 
@@ -890,7 +906,15 @@ class CampaignGame {
                 return a.название.localeCompare(b.название);
             });
 
-            spellsListContainer.innerHTML = this.renderSpellsList(spells);
+            currentSpellsListContainer.innerHTML = this.renderSpellsList(spells);
+            
+            // Восстанавливаем выделение выбранного элемента, если он был
+            if (selectedSpellId) {
+                const selectedItem = currentSpellsListContainer.querySelector(`[data-spell-id="${selectedSpellId}"]`);
+                if (selectedItem) {
+                    selectedItem.classList.add('selected');
+                }
+            }
         };
 
         // Инициализируем список заклинаний при первой загрузке
